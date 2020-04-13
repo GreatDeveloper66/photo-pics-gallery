@@ -26,18 +26,18 @@ organizer where we can add and remove Pokemon as needed:
 
 Although we have not explicitly gone over some of the CRUD actions involved in
 adding and deleting relationships in this section of content, refer back to what
-you learned about CRUD actions in Rails and use your new understanding of 
+you learned about CRUD actions in Rails and use your new understanding of
 rendering JSON to try and solve these challenges.
 
 ## Goals
 
-**Note:** There are no tests in this lesson so running the `learn` command will not work. Rather, your 
-task is to build towards the goals below by constructing both a Rails API and JavaScript frontend together. 
+**Note:** There are no tests in this lesson so running the `learn` command will not work. Rather, your
+task is to build towards the goals below by constructing both a Rails API and JavaScript frontend together.
 The specific implementation for achieving these goals is left to you.
 
 - When a user loads the page, they should see all trainers, with their current team of Pokemon.
 - Whenever a user hits Add Pokemon and they have space on their team, they should get a new Pokemon.
-- Whenever a user hits Release Pokemon on a specific Pokemon team, that specific Pokemon should be 
+- Whenever a user hits Release Pokemon on a specific Pokemon team, that specific Pokemon should be
 released from the team.
 
 ## Backend
@@ -57,7 +57,7 @@ build, add the following gem to the Gemfile:
 gem 'faker'
 ```
 
-While we are in the Gemfile, uncomment `gem 'rack-cors'`, then run 
+While we are in the Gemfile, uncomment `gem 'rack-cors'`, then run
 `bundle install`. If you recall, `rack-cors` is necessary for cross-origin
 resource sharing. To get rack-cors working, once the gem is installed, add the
 following to `config/application.rb` inside `class Application <
