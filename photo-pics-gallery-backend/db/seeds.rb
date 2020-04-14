@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+User.destroy_all
+users = ["Adam","Mike","Jimmy","Lisa","Janette","Lucy"];
+users.each { |use| User.create(username: use) }
