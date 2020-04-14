@@ -1,4 +1,8 @@
-const userURL = "http://localhost:3000/users"
+const userURL = "http://localhost:3000/users";
+$('.menu .item')
+  .tab()
+;
+
 document.getElementById('login-form').addEventListener('submit', function(event){
   event.preventDefault();
   const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
@@ -14,5 +18,4 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.log(error));
-
 });
