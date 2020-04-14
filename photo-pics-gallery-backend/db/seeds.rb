@@ -6,10 +6,25 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+User.destroy_all
+Category.destroy_all
+Picture.destroy_all
+
 bro = User.create(username: "Bro")
 
 sports = Category.create(name: "Sports")
+games = Category.create(name: "Games")
+leisure = Category.create(name: "Leisure")
+events = Category.create(name: "Events")
+soccer = Category.create(name: "Soccer")
+
+categories = [sports, games, leisure, events, soccer]
 
 soccer = Picture.create(creator: bro, img_url: "https://upload.wikimedia.org/wikipedia/commons/9/92/Youth-soccer-indiana.jpg")
 
-PictureCategory.create(picture: soccer, category: sports)
+
+categories.each do |category|
+    10.times do
+        PictureCategory.create(picture: soccer, category: category)
+    end
+end
