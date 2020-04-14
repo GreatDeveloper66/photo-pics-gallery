@@ -14,12 +14,24 @@
   </head>
   <body>
     <div class="ui top attached tabular menu">
-  <a class="item" data-tab="first">First</a>
-  <a class="item" data-tab="second">Second</a>
-  <a class="item active" data-tab="third">Third</a>
+  <a class="item" data-tab="first">Register</a>
+  <a class="item" data-tab="second">Login</a>
+  <a class="item" data-tab="third">Pictures</a>
+  <a class="item active" data-tab="fourth">Edit UserName</a>
+  <a class="item active" data-tab="fifth">Logout</a>
 </div>
 <div class="ui bottom attached tab segment" data-tab="first">
-  First
+  <form class="ui form" id="login-form">
+    <div class="field">
+      <label>First Name</label>
+      <input type="text" name="firstname" placeholder="First Name">
+    </div>
+    <div class="field">
+      <label>Last Name</label>
+      <input type="text" name="lastname" placeholder="Last Name">
+    </div>
+    <button class="ui button" type="submit">Submit</button>
+  </form>
 </div>
 <div class="ui bottom attached tab segment" data-tab="second">
   Second
@@ -27,34 +39,13 @@
 <div class="ui bottom attached tab segment active" data-tab="third">
   Third
 </div>
-    <!-- <div class="ui tabular menu">
-      <a class="item">
-        Login
-      </a>
-      <a class="item">
-        Logout
-      </a>
-      <a class="item">
-        Pictures
-      </a> -->
-    <!-- </div> -->
-    <form class="ui form" id="login-form">
-      <div class="field">
-        <label>First Name</label>
-        <input type="text" name="firstname" placeholder="First Name">
-      </div>
-  <div class="field">
-    <label>Last Name</label>
-    <input type="text" name="lastname" placeholder="Last Name">
-  </div>
-  <!-- <div class="field">
-    <div class="ui checkbox">
-      <input type="checkbox" tabindex="0" class="hidden">
-      <label>I agree to the Terms and Conditions</label>
-    </div>
-  </div> -->
-  <button class="ui button" type="submit">Submit</button>
-</form>
+<div class="ui bottom attached tab segment" data-tab="fourth">
+  Fourth
+</div>
+<div class="ui bottom attached tab segment" data-tab="fifth">
+  Fifth
+</div>
+
 
   </body>
 </html>
