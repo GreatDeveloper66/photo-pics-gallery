@@ -1,7 +1,7 @@
 const DOMAIN = "http://localhost:3000"
 const CATEGORIES_URL = `${DOMAIN}/categories`
 
-const view = document.querySelector("#view")
+const picturesView = document.querySelector("#pictures-view")
 
 main()
 
@@ -10,8 +10,9 @@ function main() {
 }
 
 function addBrowsePicturesListener() {
-    const browse = document.querySelector("#browse")
-    browse.addEventListener("click", event => {
+    const pictures = document.querySelector("#pictures")
+    pictures.addEventListener("click", event => {
+        event.preventDefault()
         fetch(CATEGORIES_URL)
             .then(resp => resp.json())
             .then(categories => {
@@ -19,8 +20,8 @@ function addBrowsePicturesListener() {
                 const categoriesDiv = document.createElement("div")
                 categoriesDiv.id = "categories"
                 categoriesDiv.innerHTML = categoriesList
-                view.innerHTML = ""
-                view.append(categoriesDiv)
+                picturesView.innerHTML = ""
+                picturesView.append(categoriesDiv)
                 addCategoriesListener(categoriesDiv, categories)
             })
     })
