@@ -3,6 +3,68 @@ const CATEGORIES_URL = `${DOMAIN}/categories`
 
 const picturesView = document.querySelector("#pictures-view")
 
+class CategoryList {
+    constructor(categoriesJSON){
+        this.createCategoryObjects(categoriesJSON)
+        this.element = document.createElement("div")
+        this.element.id = "categories"
+        this.element.className = "ui celled list"
+    }
+
+    createCategoryObjects = (categoriesJSON) => {
+        this.categories = categoriesJSON.map(category => new Category(category.id, category.name, category.recent_pictures))
+    }
+
+    render = (node) => {
+        this.categories.forEach(category => {
+            category.createNode()
+            this.element.append(category.element)
+        })
+        node.append(this.element)
+    }
+}
+
+class Category {
+    constructor(id, name, recentPictures) {
+        this.id = id
+        this.name = name
+        this.recentPictures = recentPictures
+        this.element = document.createElement("div")
+        this.element.className = "item"
+    }
+
+    createNode = () => {
+        const html = `
+        ${this.name}
+        <button class="expand-category" data-id=${this.id}>Expand</button>
+        `
+        this.element.innerHTML = html
+    }
+
+    renderExpansion = () => {
+        let expansionText = `<button class="show-all" data-id=${this.id}>Show All Pictures</button>`
+        this.recentPictures.forEach(picture => {
+            expansionText += `
+            <div class="ui medium images content">
+                <img class="picture left floated" src="${picture.img_url}">
+            </div>
+            `
+        })
+        this.expansion = document.createElement("div")
+        this.expansion.className = "expansion"
+        this.expansion.innerHTML = expansionText
+        this.element.append(this.expansion)
+    }
+
+    removeExpansion() {
+        this.expansion.remove()
+    }
+}
+
+class Picture {
+
+}
+
 main()
 
 function main() {
@@ -16,46 +78,30 @@ function addBrowsePicturesListener() {
         fetch(CATEGORIES_URL)
             .then(resp => resp.json())
             .then(categories => {
-                const categoriesList = renderCategoryList(categories)
-                const categoriesDiv = document.createElement("div")
-                categoriesDiv.id = "categories"
-                categoriesDiv.innerHTML = categoriesList
-                picturesView.innerHTML = ""
-                picturesView.append(categoriesDiv)
-                addCategoriesListener(categoriesDiv, categories)
+                const categoriesList = new CategoryList(categories)
+                categoriesList.render(picturesView)
+                addCategoriesListener(categoriesList)
             })
     })
 }
 
-function renderCategoryList(categories) {
-    let categoryLis = ""
-    categories.forEach(category => {
-        categoryLis += `
-        <li>
-        ${category.name}
-        <button class="expand-category" data-id=${category.id}>Expand</button>
-        </li>
-        `
-    })
-    return `<ul>${categoryLis}</ul>`
-}
 
-function addCategoriesListener(categoriesDiv, categories) {
-    categoriesDiv.addEventListener("click", event => {
+function addCategoriesListener(categoriesList) {
+    categoriesList.element.addEventListener("click", event => {
         if(event.target.className === "expand-category") {
             const expandButton = event.target
             expandButton.innerHTML = "Collapse"
             expandButton.className = "collapse-category"
             const expandedCategoryId = parseInt(event.target.dataset.id)
-            const expandedCategory = categories.find(category => category.id === expandedCategoryId)
-            const expansion = renderExpandedCategory(expandedCategory)
-            event.target.parentNode.innerHTML += expansion
+            const expandedCategory = categoriesList.categories.find(category => category.id === expandedCategoryId)
+            expandedCategory.renderExpansion()
         } else if(event.target.className === "collapse-category") {
             const collapseButton = event.target
             collapseButton.innerHTML = "Expand"
             collapseButton.className = "expand-category"
-            const expansion = collapseButton.nextSibling.nextSibling
-            expansion.remove()
+            const collapsedCategoryId = parseInt(event.target.dataset.id)
+            const collapsedCategory = categoriesList.categories.find(category => category.id === collapsedCategoryId)
+            collapsedCategory.removeExpansion()
         } else if(event.target.className === "show-all") {
             const showAll = event.target
             const url = CATEGORIES_URL + `/${showAll.dataset.id}`
@@ -71,19 +117,4 @@ function addCategoriesListener(categoriesDiv, categories) {
                 })
         }
     })
-}
-
-function renderExpandedCategory(expandedCategory) {
-    let pictures = ""
-    expandedCategory.recent_pictures.forEach(picture => {
-        pictures += `
-        <img class="picture" src="${picture.img_url}">
-        `
-    })
-    return `
-    <div class="expansion">
-        <button class="show-all" data-id=${expandedCategory.id}>Show All Pictures</button>
-        ${pictures}
-    </div>
-    `
 }
