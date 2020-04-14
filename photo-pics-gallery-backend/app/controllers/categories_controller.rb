@@ -7,6 +7,6 @@ class CategoriesController < ApplicationController
 
     def show
         category = Category.find(params[:id])
-        render json: category, include: :pictures
+        render json: category, methods: :sorted_pictures
     end
 end

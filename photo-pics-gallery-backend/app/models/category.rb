@@ -5,4 +5,8 @@ class Category < ApplicationRecord
   def recent_pictures
     pictures.max(5) {|pic_1, pic_2| pic_1.created_at <=> pic_2.created_at}
   end
+
+  def sorted_pictures
+    pictures.sort {|pic_1, pic_2| pic_1.created_at <=> pic_2.created_at}
+  end
 end
