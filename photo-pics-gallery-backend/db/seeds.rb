@@ -10,6 +10,7 @@
 User.destroy_all
 Category.destroy_all
 Picture.destroy_all
+Like.destroy_all
 
 users = ["Adam","Mike","Jimmy","Lisa","Janette","Lucy"];
 created_users = users.map { |use| User.create(username: use) }
@@ -29,4 +30,10 @@ categories.each do |category|
     10.times do
         PictureCategory.create(picture: soccer, category: category)
     end
+end
+
+created_users.each do |user|
+  Picture.all.each do |pic|
+    user.likes_picture(pic)
+  end
 end
