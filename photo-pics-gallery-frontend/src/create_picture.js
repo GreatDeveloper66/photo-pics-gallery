@@ -16,6 +16,7 @@ class AddPicture {
                     const picture = new Picture(newPicture)
                     picture.container = this.newPictureContainer
                     picture.renderShow()
+                    event.target.style.marginBottom = "20px"
                     event.target.reset()
                 })
         })

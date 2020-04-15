@@ -136,6 +136,7 @@ class Category {
                             const pictureObj = new Picture(picture)
                             pictureObj.renderShow()
                             pictureObj.card.style.float = "right"
+                            pictureObj.card.style.marginRight = "30px"
                         })
             }
         })
