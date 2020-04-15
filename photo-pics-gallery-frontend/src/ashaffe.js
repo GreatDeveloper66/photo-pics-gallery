@@ -47,6 +47,7 @@ const profile_form =
     <input type="text" name="lastname" placeholder="Last Name">
   </div>
   <button class="ui button" type="submit">Submit</button>
+  <button class="negative ui button" id="delete_button">Delete</button>
 </form>
 `;
 
