@@ -49,18 +49,22 @@
   Fifth
 </div>
 <div id="add-picture-container" class="ui bottom attached tab segment" data-tab="sixth">
-  <form class="ui form" id="add-picture-form">
-    <div class="field">
-      <label>Picture URL:</label>
-      <input type="text" name="img-url">
-    </div>
-    <div class="field">
-      <label>Categories:</label>
-      <p>Separate categories by a comma</p>
-      <textarea name="categories" rows="10" cols="30"></textarea>
-    </div>
-    <input class="ui button" type="submit" value="Add Picture">
-</form>
+  <div id="add-picture-form">
+    <form class="ui form">
+      <div class="field">
+        <label>Picture URL:</label>
+        <input type="text" name="img-url">
+      </div>
+      <div class="field">
+        <label>Categories:</label>
+        <p>Separate categories with a comma</p>
+        <textarea name="categories-attributes" rows="10" cols="30"></textarea>
+      </div>
+      <input class="ui button" type="submit" value="Add Picture">
+    </form>
+  </div>
+  <div id="new-picture">
+  </div>
 </div>
 
   </body>

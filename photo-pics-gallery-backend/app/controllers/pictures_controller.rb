@@ -1,8 +1,8 @@
 class PicturesController < ApplicationController
 
     def create
-        picture = Picture.create(params[:picture])
-        render json: picture, include: :categories
+        picture = Picture.create(picture_params)
+        render json: picture, include: [:categories, :creator]
     end
 
     def show
@@ -12,5 +12,11 @@ class PicturesController < ApplicationController
 
     def destroy
         Picture.find(params[:id]).destroy
+    end
+
+    private
+
+    def picture_params
+        params.require(:new_picture).permit(:creator_id, :img_url, :categories_attributes => [:name])
     end
 end

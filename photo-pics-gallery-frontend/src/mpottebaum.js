@@ -135,6 +135,7 @@ class Category {
                         .then(picture => {
                             const pictureObj = new Picture(picture)
                             pictureObj.renderShow()
+                            pictureObj.card.style.float = "right"
                         })
             }
         })
@@ -163,7 +164,6 @@ class Picture {
         </div>
         `
         this.card.innerHTML = contents
-        this.card.style.float = "right"
         this.container.innerHTML = ""
         this.container.append(this.card)
     }
