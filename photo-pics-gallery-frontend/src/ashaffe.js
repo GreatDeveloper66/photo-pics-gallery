@@ -60,39 +60,46 @@ const profile_form =
 `;
 
 registerTab.innerHTML = register_form;
-
+registerSubmit();
 // document.querySelectorAll('[data-tab="second"]')[1].innerHTML = login_form;
 document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
-document.getElementById('register_form').addEventListener('submit', function(event){
-  event.preventDefault();
-  const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
-  const configObj = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
-    body: JSON.stringify({username: fullname})
-  };
-  fetch(usersURL, configObj)
-    .then(response => response.json())
-    .then(data => {
-      current_user = data;
-      console.log(data);
-    })
-    .catch(error => console.log(error));
+function registerSubmit(){
+  document.getElementById('register_form').addEventListener('submit', function(event){
+    event.preventDefault();
+    const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
+    const configObj = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({username: fullname})
+    };
+    fetch(usersURL, configObj)
+      .then(response => response.json())
+      .then(data => {
+        current_user = data;
+        console.log(data);
+      })
+      .catch(error => console.log(error));
 
-    registerHeader.innerHTML = `LOGOUT`;
-    document.getElementById('login_button').remove();
-    document.getElementById('register_form').innerHTML += logoutButton;
-    document.getElementById('logout_button').addEventListener('click', function(){
-      current_user = null;
-      document.getElementById('logout_button').remove();
-      document.getElementById('register_form').innerHTML += loginButton;
-      registerHeader.innerHTML = `Register/Login`;
+      registerHeader.innerHTML = `LOGOUT`;
+      document.getElementById('login_button').remove();
+      document.getElementById('register_form').innerHTML += logoutButton;
+      document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = profile_form
+
+      document.getElementById('logout_button').addEventListener('click', function(){
+        document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
+        current_user = null;
+        document.getElementById('logout_button').remove();
+        document.getElementById('register_form').innerHTML += loginButton;
+        registerHeader.innerHTML = `Register/Login`;
+
+      });
+
+      profileSubmit();
     });
-    document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = profile_form
-});
+  }
 
 
 
@@ -116,30 +123,32 @@ document.getElementById('register_form').addEventListener('submit', function(eve
 //     .catch(error => console.log(error));
 // });
 
+function profileSubmit() {
+  document.getElementById('profile-form').addEventListener('submit', function(event){
+    event.preventDefault();
+    const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
+    const configObj = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({username: fullname})
+    };
+    console.log(`${usersURL}/${current_user.id}`);
+    console.log(configObj);
 
-document.getElementById('profile-form').addEventListener('submit', function(event){
-  event.preventDefault();
-  const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
-  const configObj = {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
-    body: JSON.stringify({username: fullname})
-  };
-  console.log(`${usersURL}/${current_user.id}`);
-  console.log(configObj);
-
-  fetch(`${usersURL}/${current_user.id}`, configObj)
-     .then(response => console.log(response.json()))
-     .then(data => console.log(data))
-     .catch(error => console.log(error));
-  });
-
+    fetch(`${usersURL}/${current_user.id}`, configObj)
+      .then(response => console.log(response.json()))
+      .then(data => console.log(data))
+      .catch(error => console.log(error));
+    });
+  }
+function deleteUser() {
   document.getElementById('delete_button').addEventListener('click',function(event){
     fetch(`${usersURL}/${current_user.id}`, {method: 'DELETE'})
       .then(response => console.log(response.json()));
     current_user = null;
     document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
   });
+}
