@@ -1,4 +1,4 @@
-let current_user = null;
+var current_user = null;
 const usersURL = "http://localhost:3000/users";
 const registerHeader = document.querySelectorAll('[data-tab="first"]')[0];
 const registerTab = document.querySelectorAll('[data-tab="first"]')[1];
@@ -28,36 +28,6 @@ const register_form =
 </form>
 `;
 
-// const login_form =
-// `
-// <form class="ui form" id="login-form">
-//   <div class="field">
-//     <label>First Name</label>
-//     <input type="text" name="firstname" placeholder="First Name">
-//   </div>
-//   <div class="field">
-//     <label>Last Name</label>
-//     <input type="text" name="lastname" placeholder="Last Name">
-//   </div>
-//   <button class="ui button" type="submit">Submit</button>
-// </form>
-// `;
-
-const profile_form =
-`
-<form class="ui form" id="profile-form">
-  <div class="field">
-    <label>First Name</label>
-    <input type="text" name="firstname" placeholder="First Name">
-  </div>
-  <div class="field">
-    <label>Last Name</label>
-    <input type="text" name="lastname" placeholder="Last Name">
-  </div>
-  <button class="ui button" type="submit">Submit</button>
-  <button class="negative ui button" id="delete_button">Delete</button>
-</form>
-`;
 
 registerTab.innerHTML = register_form;
 registerSubmit();
@@ -75,19 +45,22 @@ function registerSubmit(){
       },
       body: JSON.stringify({username: fullname})
     };
+    renderProfile();
     fetch(usersURL, configObj)
       .then(response => response.json())
       .then(data => {
-        current_user = data;
         console.log(data);
+        const body = document.querySelector('body');
+        document.querySelector('body').dataset.id = data.id;
+        current_user = document.querySelector('body').dataset.id;
+        console.log(body);
+        console.log(current_user);
       })
       .catch(error => console.log(error));
-
+      //current_user = {id: document.querySelector('.profile-form h1').id, username: document.querySelector('.profile-form h1').innerHTML}
       registerHeader.innerHTML = `LOGOUT`;
       document.getElementById('login_button').remove();
       document.getElementById('register_form').innerHTML += logoutButton;
-      document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = profile_form
-
       document.getElementById('logout_button').addEventListener('click', function(){
         document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
         current_user = null;
@@ -98,34 +71,14 @@ function registerSubmit(){
       });
 
       profileSubmit();
+
     });
   }
-
-
-
-// document.getElementById('login-form').addEventListener('submit', function(event){
-//   event.preventDefault();
-//   const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
-//   const configObj = {
-//     method: "GET",
-//     headers: {
-//       "Content-Type": "application/json",
-//       "Accept": "application/json"
-//     },
-//     body: JSON.stringify({username: fullname})
-//   };
-//   fetch(usersURL, configObj)
-//     .then(response => response.json())
-//     .then(data => {
-//       current_user = data;
-//       console.log(data);
-//     })
-//     .catch(error => console.log(error));
-// });
 
 function profileSubmit() {
   document.getElementById('profile-form').addEventListener('submit', function(event){
     event.preventDefault();
+    console.log(document.getElementById('userheading'));
     const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
     const configObj = {
       method: "PATCH",
@@ -151,4 +104,24 @@ function deleteUser() {
     current_user = null;
     document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
   });
+}
+function renderProfile() {
+  const profile = document.querySelectorAll('[data-tab="fourth"]')[1];
+  const profile_form =
+  `
+  <form class="ui form" id="profile-form">
+    <div class="field">
+      <label>First Name</label>
+      <input type="text" name="firstname" placeholder="First Name">
+    </div>
+    <div class="field">
+      <label>Last Name</label>
+      <input type="text" name="lastname" placeholder="Last Name">
+    </div>
+    <button class="ui button" type="submit">Submit</button>
+    <button class="negative ui button" id="delete_button">Delete</button>
+  </form>
+  `;
+  profile.innerHTML = profile_form;
+
 }
