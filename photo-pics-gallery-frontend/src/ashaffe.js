@@ -34,10 +34,7 @@ function renderRegister() {
 }
 
 renderRegister();
-
-
 registerSubmit();
-// document.querySelectorAll('[data-tab="second"]')[1].innerHTML = login_form;
 document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
 function registerSubmit(){
   document.getElementById('register_form').addEventListener('submit', function(event){
@@ -55,16 +52,9 @@ function registerSubmit(){
     fetch(usersURL, configObj)
       .then(response => response.json())
       .then(data => {
-        // console.log(data);
-        // const body = document.querySelector('body');
-        // document.querySelector('body').dataset.id = data.id;
-        // current_user = document.querySelector('body').dataset.id;
-        // console.log(body);
         current_user = {id: data.id, username: data.username};
-        // console.log(current_user);
       })
       .catch(error => console.log(error));
-      //current_user = {id: document.querySelector('.profile-form h1').id, username: document.querySelector('.profile-form h1').innerHTML}
       registerHeader.innerHTML = `LOGOUT`;
       document.getElementById('login_button').remove();
       document.getElementById('register_form').innerHTML += logoutButton;
@@ -85,49 +75,39 @@ function registerSubmit(){
 function profileSubmit() {
   document.getElementById('profile-form').addEventListener('click', function(event){
     event.preventDefault();
-    console.log(event.target);
-    if(event.target.id = 'delete_button'){
+    if(event.target.id === 'delete_button'){
+      console.log('delete');
       fetch(`${usersURL}/${current_user.id}`, {method: 'DELETE'})
         .then(response => console.log(response.json()))
         .then(data => {
-          document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
-          renderProfile();
-          renderRegister();
           current_user = null;
+          renderRegister();
+          registerSubmit();
+          document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
+          registerHeader.innerHTML = `Register/Login`;
         });
     }
     else {
-      const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
-      const configObj = {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({username: fullname})
-      };
-      console.log(`${usersURL}/${current_user.id}`);
-      console.log(configObj);
-
-      fetch(`${usersURL}/${current_user.id}`, configObj)
-        .then(response => console.log(response.json()))
-        .then(data => console.log(data))
-        .catch(error => console.log(error));
+      if(event.target.id == 'submit'){
+        console.log('submit')
+        const username = `${event.target.parentNode.firstname.value} ${event.target.parentNode.lastname.value}`;
+        const configObj = {
+           method: "PATCH",
+           headers: {
+             "Content-Type": "application/json",
+             "Accept": "application/json"
+           },
+           body: JSON.stringify({username: username})
+         };
+         fetch(`${usersURL}/${current_user.id}`, configObj)
+            .then(response => console.log(response.json()))
+            .then(data => console.log(data))
+            .catch(error => console.log(error));
+      }
     }
   });
 }
-// function deleteUser() {
-//   deleteButton.addEventListener('click',function(event){
-//     fetch(`${usersURL}/${current_user.id}`, {method: 'DELETE'})
-//       .then(response => console.log(response.json()))
-//       .then(data => {
-//         current_user = null;
-//         document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
-//         renderProfile();
-//         renderRegister();
-//       });
-//   });
-// }
+
 function renderProfile() {
   const profile = document.querySelectorAll('[data-tab="fourth"]')[1];
   const profile_form =
@@ -141,7 +121,7 @@ function renderProfile() {
       <label>Last Name</label>
       <input type="text" name="lastname" placeholder="Last Name">
     </div>
-    <button class="ui button" type="submit">Submit</button>
+    <button class="ui button" type="submit" id="submit">Submit</button>
     <button class="negative ui button" id="delete_button">Delete</button>
   </form>
   `;

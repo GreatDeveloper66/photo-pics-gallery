@@ -16,11 +16,13 @@ class UsersController < ApplicationController
       render json:user
     end
     def update
-      User.update(user_params)
+      user = User.update(user_params)
+      render json:user
     end
 
     def destroy
       User.find_by(id: params[:id]).destroy
+      render json: {message: "User has been deleted"}
     end
 
     private
