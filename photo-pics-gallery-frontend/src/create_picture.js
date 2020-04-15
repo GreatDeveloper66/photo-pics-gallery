@@ -3,6 +3,7 @@ class AddPicture {
         this.form = document.querySelector("#add-picture-form")
         this.form.style.maxWidth = "700px"
         this.categoriesAttributes = []
+        this.newPictureContainer = document.querySelector("#new-picture")
     }
 
     addFormListener = () => {
@@ -13,7 +14,7 @@ class AddPicture {
                 .then(newPicture => {
                     this.categoriesAttributes = []
                     const picture = new Picture(newPicture)
-                    picture.container = document.querySelector("#new-picture")
+                    picture.container = this.newPictureContainer
                     picture.renderShow()
                     event.target.reset()
                 })
@@ -50,10 +51,15 @@ class AddPicture {
     }
 
     buildCategoriesAttributes = submittedForm => {
-        const categoryNames = submittedForm["categories-attributes"].value.split(", ")
+        const categoryNames = submittedForm["categories-attributes"].value.split(/, */)
         categoryNames.forEach(name => {
             this.categoriesAttributes.push({name: name})
         })
+    }
+
+    addClearNewPicturesListener = () => {
+        const link = document.querySelector("#add-picture")
+        link.addEventListener("click", event => this.newPictureContainer.innerHTML = "")
     }
 }
 
@@ -62,6 +68,7 @@ class AddPicture {
 
 const addPicture = () => {
     const addPictureObj = new AddPicture()
+    addPictureObj.addClearNewPicturesListener()
     addPictureObj.addFormListener()
 }
 
