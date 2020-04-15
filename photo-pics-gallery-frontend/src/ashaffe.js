@@ -1,4 +1,6 @@
-const userURL = "http://localhost:3000/users";
+let current_user = null;
+const usersURL = "http://localhost:3000/users";
+
 $('.menu .item')
   .tab()
 ;
@@ -63,8 +65,52 @@ document.getElementById('register-form').addEventListener('submit', function(eve
     },
     body: JSON.stringify({username: fullname})
   };
-  fetch(userURL, configObj)
+  fetch(usersURL, configObj)
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => {
+      current_user = data;
+      console.log(data);
+    })
     .catch(error => console.log(error));
 });
+
+document.getElementById('login-form').addEventListener('submit', function(event){
+  event.preventDefault();
+  const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
+  const configObj = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({username: fullname})
+  };
+  fetch(usersURL, configObj)
+    .then(response => response.json())
+    .then(data => {
+      current_user = data;
+      console.log(data);
+    })
+    .catch(error => console.log(error));
+});
+
+
+document.getElementById('profile-form').addEventListener('submit', function(event){
+  event.preventDefault();
+  const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
+  const configObj = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({username: fullname})
+  };
+  console.log(`${usersURL}/${current_user.id}`);
+  console.log(configObj);
+
+  fetch(`${usersURL}/${current_user.id}`, configObj)
+     .then(response => console.log(response.json()))
+     .then(data => console.log(data))
+     .catch(error => console.log(error));
+  });
