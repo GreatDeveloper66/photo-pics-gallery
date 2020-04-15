@@ -127,17 +127,17 @@ class Category {
 
     addPictureClickListener = () => {
         this.picturesContainer.addEventListener("click", event => {
-            if(event.target.tagName === "IMG") {
-                const imgTag = event.target
-                const url = PICTURES_URL + `/${imgTag.dataset.id}`
-                    fetch(url)
-                        .then(resp => resp.json())
-                        .then(picture => {
-                            const pictureObj = new Picture(picture)
-                            pictureObj.renderShow()
-                            pictureObj.card.style.float = "right"
-                            pictureObj.card.style.marginRight = "30px"
-                        })
+        if(event.target.tagName === "IMG") {
+            const imgTag = event.target
+            const url = PICTURES_URL + `/${imgTag.dataset.id}`
+            fetch(url)
+                .then(resp => resp.json())
+                .then(picture => {
+                    const pictureObj = new Picture(picture)
+                    pictureObj.renderShow()
+                    pictureObj.card.style.float = "right"
+                    pictureObj.card.style.marginRight = "30px"
+                })
             }
         })
     }
