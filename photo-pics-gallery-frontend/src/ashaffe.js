@@ -90,7 +90,9 @@ function profileSubmit() {
     else {
       if(event.target.id == 'submit'){
         console.log('submit')
+
         const username = `${event.target.parentNode.firstname.value} ${event.target.parentNode.lastname.value}`;
+        current_user.username = username;
         const configObj = {
            method: "PATCH",
            headers: {
@@ -101,7 +103,9 @@ function profileSubmit() {
          };
          fetch(`${usersURL}/${current_user.id}`, configObj)
             .then(response => console.log(response.json()))
-            .then(data => console.log(data))
+            .then(data => {
+              console.log(data);
+            })
             .catch(error => console.log(error));
       }
     }
