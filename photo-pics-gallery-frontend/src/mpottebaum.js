@@ -1,5 +1,6 @@
 const DOMAIN = "http://localhost:3000"
 const CATEGORIES_URL = `${DOMAIN}/categories`
+const PICTURES_URL = `${DOMAIN}/pictures`
 
 
 class CategoryList {
@@ -7,7 +8,7 @@ class CategoryList {
         this.createCategoryObjects(categoriesJSON)
         this.element = document.createElement("div")
         this.element.id = "categories"
-        this.element.className = "ui celled list"
+        this.element.className = "ui middle aligned selection list"
         this.container = document.querySelector("#pictures-view")
     }
 
@@ -26,9 +27,9 @@ class CategoryList {
 
     addClickListener = () => {
         this.element.addEventListener("click", event => {
-            if(event.target.className === "expand-category") {
-                const button = event.target
-                this.toggleExpandCollapse(button)
+            if(event.target.dataset.type === "category") {
+                console.log(event.target)
+                this.toggleExpandCollapse(event.target)
             } else if(event.target.className === "show-all") {
                 const showAll = event.target
                 const category = this.findCategory(showAll.dataset.id)
@@ -37,20 +38,20 @@ class CategoryList {
         })
     }
 
+    toggleExpandCollapse = div => {
+        const category = this.findCategory(div.dataset.id)
+        if(div.dataset.expanded === "false") {
+            div.dataset.expanded = "true"
+            category.renderExpansion()
+        } else {
+            div.dataset.expanded = "false"
+            category.removeExpansion()
+        }
+    }
+
     findCategory = id => {
         const categoryId = parseInt(id)
         return this.categories.find(category => category.id === categoryId)
-    }
-
-    toggleExpandCollapse = button => {
-        const category = this.findCategory(button.dataset.id)
-        if(button.innerText === "Expand") {
-            button.innerHTML = "Collapse"
-            category.renderExpansion()
-        } else {
-            button.innerHTML = "Expand"
-            category.removeExpansion()
-        }
     }
 }
 
@@ -65,10 +66,7 @@ class Category {
     }
 
     createNode = () => {
-        const html = `
-        ${this.name}
-        <button class="expand-category" data-id=${this.id}>Expand</button>
-        `
+        const html = `<div class="ui huge header" data-type="category" data-expanded="false" data-id=${this.id}>${this.name}</div>`
         this.element.innerHTML = html
     }
 
@@ -100,22 +98,77 @@ class Category {
     renderShowAll = () => {
         this.fetchShowAll()
             .then(category => {
-                let pictures = ""
-                category.sorted_pictures.forEach(picture => {
-                    pictures += `
-                    <img class="picture left floated" src="${picture.img_url}">
-                    `
-                })
-                const categoryHTML = `
-                    <h1>${this.name}</h1>
-                    <div class="ui medium images content">${pictures}</div>
-                    `
-                this.showContainer.innerHTML = categoryHTML
+                this.allPictures = category.sorted_pictures
+                const header = document.createElement("h1")
+                header.innerText = this.name
+                this.buildPicturesContainer()
+                this.showContainer.innerHTML = ""
+                this.showContainer.append(header, this.picturesContainer)
+                this.addPictureClickListener()
             })
+    }
+
+    buildPicturesContainer = () => {
+        this.picturesContainer = document.createElement("div")
+        this.picturesContainer.className = "ui medium images content"
+        let pictures = ""
+        this.allPictures.forEach(picture => {
+            pictures += `
+            <img data-id=${picture.id} class="picture left floated" src="${picture.img_url}">
+            `
+        })
+        const pictureShowContainer = "<div id='show-picture'></div>"
+        this.picturesContainer.innerHTML = pictureShowContainer + pictures
+    }
+
+    addPictureClickListener = () => {
+        this.picturesContainer.addEventListener("click", event => {
+            if(event.target.tagName === "IMG") {
+                const imgTag = event.target
+                const url = PICTURES_URL + `/${imgTag.dataset.id}`
+                    fetch(url)
+                        .then(resp => resp.json())
+                        .then(picture => {
+                            const pictureObj = new Picture(picture)
+                            pictureObj.renderShow()
+                        })
+            }
+        })
     }
 }
 
 class Picture {
+    constructor(picture) {
+        this.url = picture.img_url
+        this.creator = picture.creator
+        this.categories = picture.categories
+        this.container = document.querySelector("#show-picture")
+    }
+
+    renderShow = () => {
+        this.card = document.createElement("div")
+        const categoryHTML = this.createCategoriesHTML()
+        const contents = `
+        <img class="ui large image" src="${this.url}">
+        <div>
+            <h3>${this.creator.username}</h3>
+            <h5>Categories</h5>
+            <div class="ui middle aligned selection list">${categoryHTML}</div>
+        </div>
+        `
+        this.card.innerHTML = contents
+        this.card.style.float = "right"
+        this.container.innerHTML = ""
+        this.container.append(this.card)
+    }
+
+    createCategoriesHTML = () => {
+        let html = ""
+        this.categories.forEach(category => {
+            html += `<div class="item" style="font-size: 15px;">${category.name}</div>`
+        })
+        return html
+    }
 
 }
 
@@ -123,25 +176,28 @@ class Picture {
 
 
 
-main()
-
-function main() {
-    addBrowsePicturesListener()
-}
 
 
 
 
-function addBrowsePicturesListener() {
+
+
+const addBrowsePicturesListener = () => {
     const pictures = document.querySelector("#pictures")
     pictures.addEventListener("click", event => {
         event.preventDefault()
         fetch(CATEGORIES_URL)
-            .then(resp => resp.json())
-            .then(categories => {
-                const categoriesList = new CategoryList(categories)
-                categoriesList.render()
-                categoriesList.addClickListener()
-            })
+        .then(resp => resp.json())
+        .then(categories => {
+            const categoriesList = new CategoryList(categories)
+            categoriesList.render()
+            categoriesList.addClickListener()
+        })
     })
 }
+
+const main = () => {
+    addBrowsePicturesListener()
+}
+
+main()
