@@ -62,8 +62,7 @@ const profile_form =
 registerTab.innerHTML = register_form;
 
 // document.querySelectorAll('[data-tab="second"]')[1].innerHTML = login_form;
-document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = profile_form
-
+document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
 document.getElementById('register_form').addEventListener('submit', function(event){
   event.preventDefault();
   const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
@@ -92,6 +91,7 @@ document.getElementById('register_form').addEventListener('submit', function(eve
       document.getElementById('register_form').innerHTML += loginButton;
       registerHeader.innerHTML = `Register/Login`;
     });
+    document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = profile_form
 });
 
 
@@ -135,4 +135,11 @@ document.getElementById('profile-form').addEventListener('submit', function(even
      .then(response => console.log(response.json()))
      .then(data => console.log(data))
      .catch(error => console.log(error));
+  });
+
+  document.getElementById('delete_button').addEventListener('click',function(event){
+    fetch(`${usersURL}/${current_user.id}`, {method: 'DELETE'})
+      .then(response => console.log(response.json()));
+    current_user = null;
+    document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
   });
