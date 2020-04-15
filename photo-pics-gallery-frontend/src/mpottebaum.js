@@ -167,14 +167,25 @@ class Picture {
         this.card.innerHTML = contents
         this.container.innerHTML = ""
         this.container.append(this.card)
+        this.addCategoryListener()
     }
 
     createCategoriesHTML = () => {
         let html = ""
         this.categories.forEach(category => {
-            html += `<div class="item" style="font-size: 15px;">${category.name}</div>`
+            html += `<div class="item" style="font-size: 15px;" data-type="category" data-id=${category.id}>${category.name}</div>`
         })
         return html
+    }
+
+    addCategoryListener() {
+        this.card.addEventListener("click", event => {
+            if(event.target.dataset.type === "category") {
+                const categoryDiv = event.target
+                const selectedCategory = new Category(categoryDiv.dataset.id, categoryDiv.innerText)
+                selectedCategory.renderShowAll()
+            }
+        })
     }
 
 }
