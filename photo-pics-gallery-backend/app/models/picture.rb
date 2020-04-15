@@ -7,7 +7,8 @@ class Picture < ApplicationRecord
 
   def categories_attributes=(cat_attributes)
     cat_attributes.each do |attributes|
-      categories << Category.find_or_create_by(name: attributes.name)
+      titleized_name = attributes["name"].downcase.titleize
+      categories << Category.find_or_create_by(name: titleized_name)
     end
   end
 end

@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.js"></script>
     <script src="src/ashaffe.js" defer></script>
     <script defer src="src/mpottebaum.js"></script>
+    <script defer src="src/create_picture.js"></script>
     <meta charset="utf-8">
     <title>Photo Gallery App</title>
   </head>
@@ -20,6 +21,7 @@
   <a class="item" id="pictures" data-tab="third">Pictures</a>
   <a class="item active" data-tab="fourth">Profile</a>
   <a class="item active" data-tab="fifth">------</a>
+  <a class="item" id="add-picture" data-tab="sixth">Add Picture</a>
 </div>
 <div class="ui bottom attached tab segment" data-tab="first">
 </div>
@@ -33,6 +35,24 @@
 </div>
 <div class="ui bottom attached tab segment" data-tab="fifth">
   Fifth
+</div>
+<div id="add-picture-container" class="ui bottom attached tab segment" data-tab="sixth">
+  <div id="add-picture-form">
+    <form class="ui form">
+      <div class="field">
+        <label>Picture URL:</label>
+        <input type="text" name="img-url">
+      </div>
+      <div class="field">
+        <label>Categories:</label>
+        <p>Separate categories with a comma</p>
+        <textarea name="categories-attributes" rows="10" cols="30"></textarea>
+      </div>
+      <input class="ui button" type="submit" value="Add Picture">
+    </form>
+  </div>
+  <div id="new-picture">
+  </div>
 </div>
 
   </body>

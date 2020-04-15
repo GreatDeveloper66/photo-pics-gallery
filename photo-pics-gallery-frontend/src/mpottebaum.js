@@ -127,15 +127,17 @@ class Category {
 
     addPictureClickListener = () => {
         this.picturesContainer.addEventListener("click", event => {
-            if(event.target.tagName === "IMG") {
-                const imgTag = event.target
-                const url = PICTURES_URL + `/${imgTag.dataset.id}`
-                    fetch(url)
-                        .then(resp => resp.json())
-                        .then(picture => {
-                            const pictureObj = new Picture(picture)
-                            pictureObj.renderShow()
-                        })
+        if(event.target.tagName === "IMG") {
+            const imgTag = event.target
+            const url = PICTURES_URL + `/${imgTag.dataset.id}`
+            fetch(url)
+                .then(resp => resp.json())
+                .then(picture => {
+                    const pictureObj = new Picture(picture)
+                    pictureObj.renderShow()
+                    pictureObj.card.style.float = "right"
+                    pictureObj.card.style.marginRight = "30px"
+                })
             }
         })
     }
@@ -163,17 +165,27 @@ class Picture {
         </div>
         `
         this.card.innerHTML = contents
-        this.card.style.float = "right"
         this.container.innerHTML = ""
         this.container.append(this.card)
+        this.addCategoryListener()
     }
 
     createCategoriesHTML = () => {
         let html = ""
         this.categories.forEach(category => {
-            html += `<div class="item" style="font-size: 15px;">${category.name}</div>`
+            html += `<div class="item" style="font-size: 15px;" data-type="category" data-id=${category.id}>${category.name}</div>`
         })
         return html
+    }
+
+    addCategoryListener() {
+        this.card.addEventListener("click", event => {
+            if(event.target.dataset.type === "category") {
+                const categoryDiv = event.target
+                const selectedCategory = new Category(categoryDiv.dataset.id, categoryDiv.innerText)
+                selectedCategory.renderShowAll()
+            }
+        })
     }
 
 }
