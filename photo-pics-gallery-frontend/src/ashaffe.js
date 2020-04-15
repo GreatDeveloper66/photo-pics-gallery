@@ -136,7 +136,21 @@ function renderProfile() {
 function addLikeListeners() {
   document.getElementById('pictures-view').addEventListener('click', function(event){
     if(event.target.className === 'like-button'){
-      
+      const picture_id = event.target.previousElementSibling.previousElementSibling.dataset.id;
+      const user_id = current_user.id;
+      console.log(picture_id);
+      console.log(user_id);
+      const configObj = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body:JSON.stringify({user_id: user_id,picture_id: picture_id})
+      };
+      fetch(PICTURES_URL, configObj)
+        .then(response => response.json())
+        .then(data => console.log(data));
     }
   });
 }
