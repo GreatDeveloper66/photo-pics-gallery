@@ -19,6 +19,10 @@ class UsersController < ApplicationController
       User.update(user_params)
     end
 
+    def destroy
+      User.find_by(id: params[:id]).destroy
+    end
+
     private
     def user_params
       params.require(:user).permit(:id,:username)

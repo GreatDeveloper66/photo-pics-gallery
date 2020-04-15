@@ -13,23 +13,29 @@ $('.menu .item')
   .tab()
 ;
 
-const register_form =
-`
-<form class="ui form" id="register_form">
-  <div class="field">
-    <label>First Name</label>
-    <input type="text" name="firstname" placeholder="First Name">
-  </div>
-  <div class="field">
-    <label>Last Name</label>
-    <input type="text" name="lastname" placeholder="Last Name">
-  </div>
-  <button class="ui button" type="submit" id='login_button'>Submit</button>
-</form>
-`;
+function renderRegister() {
+  const register_form =
+  `
+  <form class="ui form" id="register_form">
+    <div class="field">
+      <label>First Name</label>
+      <input type="text" name="firstname" placeholder="First Name">
+    </div>
+    <div class="field">
+      <label>Last Name</label>
+      <input type="text" name="lastname" placeholder="Last Name">
+    </div>
+    <button class="ui button" type="submit" id='login_button'>Submit</button>
+  </form>
+  `;
 
 
-registerTab.innerHTML = register_form;
+  registerTab.innerHTML = register_form;
+}
+
+renderRegister();
+
+
 registerSubmit();
 // document.querySelectorAll('[data-tab="second"]')[1].innerHTML = login_form;
 document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
@@ -49,12 +55,13 @@ function registerSubmit(){
     fetch(usersURL, configObj)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-        const body = document.querySelector('body');
-        document.querySelector('body').dataset.id = data.id;
-        current_user = document.querySelector('body').dataset.id;
-        console.log(body);
-        console.log(current_user);
+        // console.log(data);
+        // const body = document.querySelector('body');
+        // document.querySelector('body').dataset.id = data.id;
+        // current_user = document.querySelector('body').dataset.id;
+        // console.log(body);
+        current_user = {id: data.id, username: data.username};
+        // console.log(current_user);
       })
       .catch(error => console.log(error));
       //current_user = {id: document.querySelector('.profile-form h1').id, username: document.querySelector('.profile-form h1').innerHTML}
@@ -76,35 +83,51 @@ function registerSubmit(){
   }
 
 function profileSubmit() {
-  document.getElementById('profile-form').addEventListener('submit', function(event){
+  document.getElementById('profile-form').addEventListener('click', function(event){
     event.preventDefault();
-    console.log(document.getElementById('userheading'));
-    const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
-    const configObj = {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({username: fullname})
-    };
-    console.log(`${usersURL}/${current_user.id}`);
-    console.log(configObj);
+    console.log(event.target);
+    if(event.target.id = 'delete_button'){
+      fetch(`${usersURL}/${current_user.id}`, {method: 'DELETE'})
+        .then(response => console.log(response.json()))
+        .then(data => {
+          document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
+          renderProfile();
+          renderRegister();
+          current_user = null;
+        });
+    }
+    else {
+      const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
+      const configObj = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({username: fullname})
+      };
+      console.log(`${usersURL}/${current_user.id}`);
+      console.log(configObj);
 
-    fetch(`${usersURL}/${current_user.id}`, configObj)
-      .then(response => console.log(response.json()))
-      .then(data => console.log(data))
-      .catch(error => console.log(error));
-    });
-  }
-function deleteUser() {
-  document.getElementById('delete_button').addEventListener('click',function(event){
-    fetch(`${usersURL}/${current_user.id}`, {method: 'DELETE'})
-      .then(response => console.log(response.json()));
-    current_user = null;
-    document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
+      fetch(`${usersURL}/${current_user.id}`, configObj)
+        .then(response => console.log(response.json()))
+        .then(data => console.log(data))
+        .catch(error => console.log(error));
+    }
   });
 }
+// function deleteUser() {
+//   deleteButton.addEventListener('click',function(event){
+//     fetch(`${usersURL}/${current_user.id}`, {method: 'DELETE'})
+//       .then(response => console.log(response.json()))
+//       .then(data => {
+//         current_user = null;
+//         document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
+//         renderProfile();
+//         renderRegister();
+//       });
+//   });
+// }
 function renderProfile() {
   const profile = document.querySelectorAll('[data-tab="fourth"]')[1];
   const profile_form =
@@ -125,3 +148,5 @@ function renderProfile() {
   profile.innerHTML = profile_form;
 
 }
+
+// deleteUser();
