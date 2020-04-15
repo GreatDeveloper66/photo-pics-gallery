@@ -110,11 +110,15 @@ class Category {
 
     buildPicturesContainer = () => {
         this.picturesContainer = document.createElement("div")
-        this.picturesContainer.className = "ui medium images content"
+        this.picturesContainer.id = "pictures"
         let pictures = ""
         this.allPictures.forEach(picture => {
             pictures += `
-            <img data-id=${picture.id} class="picture left floated" src="${picture.img_url}">
+            <div class="left floated">
+            <img class="category-picture ui big image" data-id=${picture.id} src="${picture.img_url}">
+            <p>Likes: </p>
+            <button class="like-button">Like Picture</button>
+            </div>
             `
         })
         const pictureShowContainer = "<div id='show-picture'></div>"
@@ -152,6 +156,8 @@ class Picture {
         <img class="ui large image" src="${this.url}">
         <div>
             <h3>${this.creator.username}</h3>
+            <p>Likes </p>
+            <button class="like-button">Like Picture</button>
             <h5>Categories</h5>
             <div class="ui middle aligned selection list">${categoryHTML}</div>
         </div>
