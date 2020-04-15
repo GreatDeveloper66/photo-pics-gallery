@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :categories, only: [:index, :show]
   resources :pictures, only: [:create, :show, :destroy]
-  
-  resources :users, only: [:index,:show,:new,:create]
+
+  resources :users, only: [:index,:show,:new,:create,:edit,:update,:destroy]
   resources :sessions, only: [:new,:create]
 end
