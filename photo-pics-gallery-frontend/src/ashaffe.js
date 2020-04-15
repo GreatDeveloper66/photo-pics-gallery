@@ -1,5 +1,8 @@
 let current_user = null;
 const usersURL = "http://localhost:3000/users";
+const registerHeader = document.querySelectorAll('[data-tab="first"]')[0];
+const registerTab = document.querySelectorAll('[data-tab="first"]')[1];
+
 
 $('.menu .item')
   .tab()
@@ -20,20 +23,20 @@ const register_form =
 </form>
 `;
 
-const login_form =
-`
-<form class="ui form" id="login-form">
-  <div class="field">
-    <label>First Name</label>
-    <input type="text" name="firstname" placeholder="First Name">
-  </div>
-  <div class="field">
-    <label>Last Name</label>
-    <input type="text" name="lastname" placeholder="Last Name">
-  </div>
-  <button class="ui button" type="submit">Submit</button>
-</form>
-`;
+// const login_form =
+// `
+// <form class="ui form" id="login-form">
+//   <div class="field">
+//     <label>First Name</label>
+//     <input type="text" name="firstname" placeholder="First Name">
+//   </div>
+//   <div class="field">
+//     <label>Last Name</label>
+//     <input type="text" name="lastname" placeholder="Last Name">
+//   </div>
+//   <button class="ui button" type="submit">Submit</button>
+// </form>
+// `;
 
 const profile_form =
 `
@@ -51,8 +54,9 @@ const profile_form =
 </form>
 `;
 
-document.querySelectorAll('[data-tab="first"]')[1].innerHTML = register_form;
-document.querySelectorAll('[data-tab="second"]')[1].innerHTML = login_form;
+registerTab.innerHTML = register_form;
+
+// document.querySelectorAll('[data-tab="second"]')[1].innerHTML = login_form;
 document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = profile_form
 
 document.getElementById('register-form').addEventListener('submit', function(event){
@@ -73,27 +77,29 @@ document.getElementById('register-form').addEventListener('submit', function(eve
       console.log(data);
     })
     .catch(error => console.log(error));
+
+    registerHeader.innerHTML = `LOGOUT`;
 });
 
-document.getElementById('login-form').addEventListener('submit', function(event){
-  event.preventDefault();
-  const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
-  const configObj = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
-    body: JSON.stringify({username: fullname})
-  };
-  fetch(usersURL, configObj)
-    .then(response => response.json())
-    .then(data => {
-      current_user = data;
-      console.log(data);
-    })
-    .catch(error => console.log(error));
-});
+// document.getElementById('login-form').addEventListener('submit', function(event){
+//   event.preventDefault();
+//   const fullname = `${event.target.firstname.value} ${event.target.lastname.value}`;
+//   const configObj = {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Accept": "application/json"
+//     },
+//     body: JSON.stringify({username: fullname})
+//   };
+//   fetch(usersURL, configObj)
+//     .then(response => response.json())
+//     .then(data => {
+//       current_user = data;
+//       console.log(data);
+//     })
+//     .catch(error => console.log(error));
+// });
 
 
 document.getElementById('profile-form').addEventListener('submit', function(event){
