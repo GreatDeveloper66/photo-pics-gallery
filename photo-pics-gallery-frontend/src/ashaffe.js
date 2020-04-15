@@ -86,7 +86,15 @@ document.getElementById('register_form').addEventListener('submit', function(eve
     registerHeader.innerHTML = `LOGOUT`;
     document.getElementById('login_button').remove();
     document.getElementById('register_form').innerHTML += logoutButton;
+    document.getElementById('logout_button').addEventListener('click', function(){
+      current_user = null;
+      document.getElementById('logout_button').remove();
+      document.getElementById('register_form').innerHTML += loginButton;
+      registerHeader.innerHTML = `Register/Login`;
+    });
 });
+
+
 
 // document.getElementById('login-form').addEventListener('submit', function(event){
 //   event.preventDefault();
