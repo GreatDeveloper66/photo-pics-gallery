@@ -33,8 +33,9 @@ class MyPictures {
         const options = this.renderCategoryOptions()
         return `
         <form class="ui form">
-            <div class="field">
-                <select id="select-category" name="category">
+            <div class="eight wide field">
+                <h1 class="ui header">Filter Pictures By Category</h1>
+                <select id="select-category" class="ui dropdown" name="category">
                     <option value="All">All</option>
                     ${options}
                 </select>
@@ -100,12 +101,15 @@ class UserPicture extends Picture {
         super(picture)
         this.id = picture.id
         this.card = document.createElement("div")
+        this.card.style.margin = "20px"
+        this.card.style.position = "relative"
+        this.card.style.height = "500px"
     }
 
     render = () => {
         this.card.innerHTML = `
-        <img class="ui big image" src="${this.url}"></img>
-        <button id="delete-picture" data-id=${this.id}>Delete</button>
+        <img style="position: absolute;" class="ui big image" src="${this.url}"></img>
+        <button id="delete-picture" class="ui primary button" style="position: absolute;" data-id=${this.id}>Delete</button>
         `
     }
 
