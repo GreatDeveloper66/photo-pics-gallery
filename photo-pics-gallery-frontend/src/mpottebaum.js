@@ -191,15 +191,6 @@ class Picture {
 }
 
 
-
-
-
-
-
-
-
-
-
 const addBrowsePicturesListener = () => {
     const pictures = document.querySelector("#pictures")
     pictures.addEventListener("click", event => {

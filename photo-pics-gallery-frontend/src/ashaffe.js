@@ -7,6 +7,7 @@ const loginButton =   `<button class="ui button" type="submit" id='login_button'
 const logoutButton =  `<button class="negative ui button" id="logout_button">Logout</button>`
 const deleteButton = `<button class="negative ui button" id="delete_button">Delete</button>`;
 const likeButtons = document.querySelectorAll('.like-button');
+const favorites = document.querySelectorAll('[data-tab="second"]')[1];
 
 
 
@@ -54,6 +55,7 @@ function registerSubmit(){
       .then(response => response.json())
       .then(data => {
         current_user = {id: data.id, username: data.username};
+        renderFavorites(data);
       })
       .catch(error => console.log(error));
       registerHeader.innerHTML = `LOGOUT`;
@@ -63,6 +65,7 @@ function registerSubmit(){
         document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
         current_user = null;
         document.getElementById('logout_button').remove();
+        favorites.innerHTML = ``;
         document.getElementById('register_form').innerHTML += loginButton;
         registerHeader.innerHTML = `Register/Login`;
 
@@ -86,6 +89,7 @@ function profileSubmit() {
           registerSubmit();
           document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
           registerHeader.innerHTML = `Register/Login`;
+          favorites.innerHTML = ``;
         });
     }
     else {
@@ -113,6 +117,41 @@ function profileSubmit() {
   });
 }
 
+ function renderFavorites(data){
+   favorites.innerHTML = ``;
+   const id = data.id;
+   fetch(`${usersURL}/${id}`)
+        .then(resp => resp.json())
+        .then(data => {
+          data.liked_pictures.forEach(pic => {
+            favorites.innerHTML +=
+            `
+              <div class="ui medium images content">
+                <img class="picture left floated" src="${pic.img_url}">
+              </div>
+            `
+          });
+
+        });
+//   if(current_user){
+//   const favorites = document.querySelectorAll('[data-tab="second"]')[1];
+//   fetch(`${usersURL}/${data.id}`)
+//     .then(resp => resp.json())
+//     .then(info => { console.log(info)
+//       // const liked_pics = info.like_pictures;
+//       // liked_pics.forEach(pic => {
+//       //   favorites.innerHTML +=
+//       //   `
+//       //   favorites.innerHTML += <div class="ui medium images content">
+//       //       <img class="picture left floated" src="${pic.img_url}">
+//       //   </div>
+//       //   `;
+//       })
+//
+//     });
+//   }
+ }
+
 function renderProfile() {
   const profile = document.querySelectorAll('[data-tab="fourth"]')[1];
   const profile_form =
@@ -139,8 +178,6 @@ function addLikeListeners() {
     if(event.target.className === 'like-button'){
       const picture_id = event.target.previousElementSibling.previousElementSibling.dataset.id;
       const user_id = current_user.id;
-      console.log(picture_id);
-      console.log(user_id);
       const configObj = {
         method: "POST",
         headers: {
@@ -151,7 +188,9 @@ function addLikeListeners() {
       };
        fetch(likesURL, configObj)
          .then(response => response.json())
-         .then(data => console.log(data));
+         .then(data => {
+           renderFavorites(current_user);
+         });
     }
   });
 }

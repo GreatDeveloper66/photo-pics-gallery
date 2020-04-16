@@ -7,12 +7,17 @@ class PicturesController < ApplicationController
 
     def show
         picture = Picture.find(params[:id])
-        render json: picture, include: [:categories, :creator]
+        render json: picture, include: [:categories, :creator], methods: :num_of_likes
     end
 
     def destroy
         Picture.find(params[:id]).destroy
         render json: {message: "success"}
+    end
+
+    def index
+      pictures = Picture.all
+      render json:pictures
     end
 
     private
