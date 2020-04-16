@@ -13,9 +13,9 @@ class AddPicture {
             this.fetchPostRequest()
                 .then(newPicture => {
                     this.categoriesAttributes = []
-                    const picture = new Picture(newPicture)
+                    const picture = new NewPicture(newPicture)
                     picture.container = this.newPictureContainer
-                    picture.renderShow()
+                    picture.renderNewPicture()
                     event.target.style.marginBottom = "20px"
                     event.target.reset()
                 })
@@ -61,6 +61,23 @@ class AddPicture {
     addClearNewPicturesListener = () => {
         const link = document.querySelector("#add-picture")
         link.addEventListener("click", event => this.newPictureContainer.innerHTML = "")
+    }
+}
+
+class NewPicture extends Picture {
+    renderNewPicture = () => {
+        this.card = document.createElement("div")
+        const categoryHTML = this.createCategoriesHTML()
+        const contents = `
+        <img id="show-img" src="${this.url}">
+        <div>
+            <h5>Categories</h5>
+            <div class="ui middle aligned selection list">${categoryHTML}</div>
+        </div>
+        `
+        this.card.innerHTML = contents
+        this.container.append(this.card)
+        this.addCategoryListener()
     }
 }
 
