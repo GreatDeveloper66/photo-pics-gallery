@@ -30,7 +30,7 @@ class CategoryList {
             if(event.target.dataset.type === "category") {
                 console.log(event.target)
                 this.toggleExpandCollapse(event.target)
-            } else if(event.target.className === "show-all") {
+            } else if(event.target.dataset.type === "show-all") {
                 const showAll = event.target
                 const category = this.findCategory(showAll.dataset.id)
                 category.renderShowAll()
@@ -71,7 +71,7 @@ class Category {
     }
 
     renderExpansion = () => {
-        let expansionText = `<button class="show-all" data-id=${this.id}>Show All Pictures</button>`
+        let expansionText = `<button class="ui button" data-type="show-all" data-id=${this.id}>Show All Pictures</button>`
         this.recentPictures.forEach(picture => {
             expansionText += `
             <div>
@@ -164,7 +164,7 @@ class Picture {
                 <button class="like-button">Like Picture</button>
             </div>
             <div id="show-info-categories">
-                <h5>Categories</h5>
+                <h3>Categories</h3>
                 <div class="ui middle aligned selection list">${categoryHTML}</div>
             </div>
         </div>
