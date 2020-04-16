@@ -54,6 +54,7 @@ function registerSubmit(){
       .then(response => response.json())
       .then(data => {
         current_user = {id: data.id, username: data.username};
+        renderFavorites(data);
       })
       .catch(error => console.log(error));
       registerHeader.innerHTML = `LOGOUT`;
@@ -112,6 +113,36 @@ function profileSubmit() {
     }
   });
 }
+
+ function renderFavorites(data){
+   const id = data.id;
+   const favorites = document.querySelectorAll('[data-tab="second"]')[1];
+   fetch(`${usersURL}/${id}`)
+        .then(resp => resp.json())
+        .then(data => {
+          data.liked_pictures.forEach(pic => {
+            favorites.innerHTML += pic.img_url;
+          });
+
+        });
+//   if(current_user){
+//   const favorites = document.querySelectorAll('[data-tab="second"]')[1];
+//   fetch(`${usersURL}/${data.id}`)
+//     .then(resp => resp.json())
+//     .then(info => { console.log(info)
+//       // const liked_pics = info.like_pictures;
+//       // liked_pics.forEach(pic => {
+//       //   favorites.innerHTML +=
+//       //   `
+//       //   favorites.innerHTML += <div class="ui medium images content">
+//       //       <img class="picture left floated" src="${pic.img_url}">
+//       //   </div>
+//       //   `;
+//       })
+//
+//     });
+//   }
+ }
 
 function renderProfile() {
   const profile = document.querySelectorAll('[data-tab="fourth"]')[1];
