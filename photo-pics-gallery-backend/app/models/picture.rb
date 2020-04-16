@@ -14,4 +14,8 @@ class Picture < ApplicationRecord
   def num_of_likes
     self.likes.length
   end
+  
+  def category_names
+    categories.map {|category| category.name}
+  end
 end
