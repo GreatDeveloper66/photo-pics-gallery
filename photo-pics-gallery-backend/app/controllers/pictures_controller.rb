@@ -14,6 +14,11 @@ class PicturesController < ApplicationController
         Picture.find(params[:id]).destroy
     end
 
+    def index
+      pictures = Picture.all
+      render json:pictures, methods: :num_of_likes
+    end
+
     private
 
     def picture_params
