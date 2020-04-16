@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     end
     def show
       user = User.find_by(id: params[:id])
-      render json:user
+      render json:user, methods: :liked_pictures
     end
     def edit
       user = User.find_by(id: params[:id])

@@ -1,11 +1,12 @@
 var current_user = null;
 const usersURL = "http://localhost:3000/users";
+const likesURL = "http://localhost:3000/likes"
 const registerHeader = document.querySelectorAll('[data-tab="first"]')[0];
 const registerTab = document.querySelectorAll('[data-tab="first"]')[1];
 const loginButton =   `<button class="ui button" type="submit" id='login_button'>Submit</button>`;
 const logoutButton =  `<button class="negative ui button" id="logout_button">Logout</button>`
 const deleteButton = `<button class="negative ui button" id="delete_button">Delete</button>`;
-
+const likeButtons = document.querySelectorAll('.like-button');
 
 
 
@@ -133,4 +134,26 @@ function renderProfile() {
 
 }
 
-// deleteUser();
+function addLikeListeners() {
+  document.getElementById('pictures-view').addEventListener('click', function(event){
+    if(event.target.className === 'like-button'){
+      const picture_id = event.target.previousElementSibling.previousElementSibling.dataset.id;
+      const user_id = current_user.id;
+      console.log(picture_id);
+      console.log(user_id);
+      const configObj = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body:JSON.stringify({user_id: user_id,picture_id: picture_id})
+      };
+       fetch(likesURL, configObj)
+         .then(response => response.json())
+         .then(data => console.log(data));
+    }
+  });
+}
+
+addLikeListeners();
