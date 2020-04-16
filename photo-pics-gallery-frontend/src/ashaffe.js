@@ -7,6 +7,7 @@ const loginButton =   `<button class="ui button" type="submit" id='login_button'
 const logoutButton =  `<button class="negative ui button" id="logout_button">Logout</button>`
 const deleteButton = `<button class="negative ui button" id="delete_button">Delete</button>`;
 const likeButtons = document.querySelectorAll('.like-button');
+const favorites = document.querySelectorAll('[data-tab="second"]')[1];
 
 
 
@@ -64,6 +65,7 @@ function registerSubmit(){
         document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
         current_user = null;
         document.getElementById('logout_button').remove();
+        favorites.innerHTML = ``;
         document.getElementById('register_form').innerHTML += loginButton;
         registerHeader.innerHTML = `Register/Login`;
 
@@ -116,7 +118,6 @@ function profileSubmit() {
 
  function renderFavorites(data){
    const id = data.id;
-   const favorites = document.querySelectorAll('[data-tab="second"]')[1];
    fetch(`${usersURL}/${id}`)
         .then(resp => resp.json())
         .then(data => {
