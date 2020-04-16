@@ -1,0 +1,39 @@
+#pictures-container {
+    display: grid;
+    grid-template-columns: minmax(300px, 3fr) minmax(300px, 2fr);
+    grid-template-rows: minmax(800px, auto);
+    grid-gap: 20px;
+}
+
+#show-img {
+    height: 300px;
+}
+
+#show-picture {
+    position: relative;
+}
+
+#show-picture-card {
+    position: fixed;
+}
+
+#thumbnails {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 20px;
+}
+
+.picture-card {
+
+}
+
+.category-picture {
+    object-fit: contain;
+    width: 200px;
+    height: 200px;
+}
+
+#show-info {
+    display: grid;
+    grid-template-columns: 150px auto;
+}

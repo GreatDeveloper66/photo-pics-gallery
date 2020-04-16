@@ -30,7 +30,7 @@ class CategoryList {
             if(event.target.dataset.type === "category") {
                 console.log(event.target)
                 this.toggleExpandCollapse(event.target)
-            } else if(event.target.className === "show-all") {
+            } else if(event.target.dataset.type === "show-all") {
                 const showAll = event.target
                 const category = this.findCategory(showAll.dataset.id)
                 category.renderShowAll()
@@ -71,11 +71,11 @@ class Category {
     }
 
     renderExpansion = () => {
-        let expansionText = `<button class="show-all" data-id=${this.id}>Show All Pictures</button>`
+        let expansionText = `<button class="ui button" data-type="show-all" data-id=${this.id}>Show All Pictures</button>`
         this.recentPictures.forEach(picture => {
             expansionText += `
-            <div class="ui medium images content">
-                <img class="picture left floated" src="${picture.img_url}">
+            <div>
+                <img class="category-picture left floated" src="${picture.img_url}">
             </div>
             `
         })
@@ -110,19 +110,20 @@ class Category {
 
     buildPicturesContainer = () => {
         this.picturesContainer = document.createElement("div")
-        this.picturesContainer.id = "pictures"
+        this.picturesContainer.id = "pictures-container"
         let pictures = ""
         this.allPictures.forEach(picture => {
             pictures += `
-            <div class="left floated">
-            <img class="category-picture ui big image" data-id=${picture.id} src="${picture.img_url}">
+            <div class="picture-card">
+            <img class="category-picture" data-id=${picture.id} src="${picture.img_url}">
             <p>Likes: </p>
             <button class="like-button">Like Picture</button>
             </div>
             `
         })
+        const thumbnails = `<div id="thumbnails">${pictures}</div>`
         const pictureShowContainer = "<div id='show-picture'></div>"
-        this.picturesContainer.innerHTML = pictureShowContainer + pictures
+        this.picturesContainer.innerHTML = thumbnails + pictureShowContainer
     }
 
     addPictureClickListener = () => {
@@ -135,8 +136,6 @@ class Category {
                 .then(picture => {
                     const pictureObj = new Picture(picture)
                     pictureObj.renderShow()
-                    pictureObj.card.style.float = "right"
-                    pictureObj.card.style.marginRight = "30px"
                 })
             }
         })
@@ -154,15 +153,20 @@ class Picture {
 
     renderShow = () => {
         this.card = document.createElement("div")
+        this.card.id = "show-picture-card"
         const categoryHTML = this.createCategoriesHTML()
         const contents = `
-        <img class="ui large image" src="${this.url}">
-        <div>
-            <h3>${this.creator.username}</h3>
-            <p>Likes </p>
-            <button class="like-button">Like Picture</button>
-            <h5>Categories</h5>
-            <div class="ui middle aligned selection list">${categoryHTML}</div>
+        <img id="show-img" src="${this.url}">
+        <div id="show-info">
+            <div id="show-info-likes">
+                <h3>${this.creator.username}</h3>
+                <p>Likes </p>
+                <button class="like-button">Like Picture</button>
+            </div>
+            <div id="show-info-categories">
+                <h3>Categories</h3>
+                <div class="ui middle aligned selection list">${categoryHTML}</div>
+            </div>
         </div>
         `
         this.card.innerHTML = contents
