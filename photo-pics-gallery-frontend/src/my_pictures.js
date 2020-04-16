@@ -99,7 +99,6 @@ class MyPictures {
 class UserPicture extends Picture {
     constructor(picture) {
         super(picture)
-        this.id = picture.id
         this.card = document.createElement("div")
         this.card.style.margin = "20px"
         this.card.style.position = "relative"
