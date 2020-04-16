@@ -121,7 +121,12 @@ function profileSubmit() {
         .then(resp => resp.json())
         .then(data => {
           data.liked_pictures.forEach(pic => {
-            favorites.innerHTML += pic.img_url;
+            favorites.innerHTML +=
+            `
+              <div class="ui medium images content">
+                <img class="picture left floated" src="${pic.img_url}">
+              </div>
+            `
           });
 
         });
