@@ -118,6 +118,7 @@ function profileSubmit() {
 }
 
  function renderFavorites(data){
+   favorites.innerHTML = ``;
    const id = data.id;
    fetch(`${usersURL}/${id}`)
         .then(resp => resp.json())
@@ -177,8 +178,6 @@ function addLikeListeners() {
     if(event.target.className === 'like-button'){
       const picture_id = event.target.previousElementSibling.previousElementSibling.dataset.id;
       const user_id = current_user.id;
-      console.log(picture_id);
-      console.log(user_id);
       const configObj = {
         method: "POST",
         headers: {
@@ -189,7 +188,9 @@ function addLikeListeners() {
       };
        fetch(likesURL, configObj)
          .then(response => response.json())
-         .then(data => console.log(data));
+         .then(data => {
+           renderFavorites(current_user);
+         });
     }
   });
 }
