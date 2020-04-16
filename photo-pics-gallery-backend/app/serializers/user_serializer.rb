@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :pictures, :categories, :likes
+  attributes :id, :username, :pictures, :categories, :likes, :liked_pictures
 
   def pictures
     self.object.created_pictures.map do |picture|
