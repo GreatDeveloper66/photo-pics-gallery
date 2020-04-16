@@ -121,17 +121,20 @@ const myPicturesListener = () => {
     const myPictures = document.querySelector("#my-pictures")
     myPictures.addEventListener("click", event => {
         event.preventDefault()
-        console.log(event)
-        // const url = usersURL + `/${current_user.id}`
-        const url = usersURL + `/1`
-        fetch(url)
-            .then(resp => resp.json())
-            .then(user => {
-                const myPicturesObj = new MyPictures(user)
-                myPicturesObj.render()
-                myPicturesObj.addDeleteListener()
-                myPicturesObj.addFilterListener()
-            })
+        if(current_user){
+            const url = usersURL + `/${current_user.id}`
+            // const url = usersURL + `/1`
+            fetch(url)
+                .then(resp => resp.json())
+                .then(user => {
+                    const myPicturesObj = new MyPictures(user)
+                    myPicturesObj.render()
+                    myPicturesObj.addDeleteListener()
+                    myPicturesObj.addFilterListener()
+                })
+        } else {
+            document.querySelector("#my-pictures-view").innerHTML = "<h1>Login/Register to view this page</h1>"
+        }
     })
 }
 
