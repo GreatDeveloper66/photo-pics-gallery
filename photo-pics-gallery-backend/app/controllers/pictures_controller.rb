@@ -12,6 +12,7 @@ class PicturesController < ApplicationController
 
     def destroy
         Picture.find(params[:id]).destroy
+        render json: {message: "success"}
     end
 
     private
