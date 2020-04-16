@@ -113,11 +113,10 @@ class Category {
         this.picturesContainer.id = "pictures"
         let pictures = ""
         this.allPictures.forEach(picture => {
-            const num_of_likes = fetchLikes(picture.id);
             pictures += `
             <div class="left floated">
             <img class="category-picture ui big image" data-id=${picture.id} src="${picture.img_url}">
-            <p>Likes: ${num_of_likes} </p>
+            <p>Likes: </p>
             <button class="like-button">Like Picture</button>
             </div>
             `
@@ -189,16 +188,6 @@ class Picture {
         })
     }
 
-}
-
-
-
-
-
-
-
-function fetchLikes(id) {
-  return 10;
 }
 
 
