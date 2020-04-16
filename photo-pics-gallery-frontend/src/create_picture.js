@@ -44,7 +44,7 @@ class AddPicture {
         this.buildCategoriesAttributes(submittedForm)
         this.pictureObject = {
             new_picture: {
-                creator_id: 1,
+                creator_id: current_user.id,
                 img_url: submittedForm["img-url"].value,
                 categories_attributes: this.categoriesAttributes
             }

@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.js"></script>
     <script defer src="src/mpottebaum.js"></script>
     <script defer src="src/create_picture.js"></script>
+    <script defer src="src/my_pictures.js"></script>
     <script defer src="src/ashaffe.js"></script>
     <meta charset="utf-8">
     <title>Photo Gallery App</title>
@@ -16,11 +17,11 @@
   <body>
 
 <div class="ui top attached tabular menu">
-  <a class="item" data-tab="first">Register/Login</a>
+  <a class="item active" data-tab="first">Register/Login</a>
   <a class="item" data-tab="second">------</a>
   <a class="item" id="pictures" data-tab="third">Pictures</a>
-  <a class="item active" data-tab="fourth">Profile</a>
-  <a class="item active" data-tab="fifth">------</a>
+  <a class="item" data-tab="fourth">Profile</a>
+  <a class="item" id="my-pictures" data-tab="fifth">My Pictures</a>
   <a class="item" id="add-picture" data-tab="sixth">Add Picture</a>
 </div>
 <div class="ui bottom attached tab segment" data-tab="first">
@@ -33,7 +34,7 @@
 <div class="ui bottom attached tab segment" data-tab="fourth">
   Fourth
 </div>
-<div class="ui bottom attached tab segment" data-tab="fifth">
+<div id="my-pictures-view" class="ui bottom attached tab segment" data-tab="fifth">
   Fifth
 </div>
 <div id="add-picture-container" class="ui bottom attached tab segment" data-tab="sixth">

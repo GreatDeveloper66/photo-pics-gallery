@@ -11,4 +11,8 @@ class Picture < ApplicationRecord
       categories << Category.find_or_create_by(name: titleized_name)
     end
   end
+
+  def category_names
+    categories.map {|category| category.name}
+  end
 end
