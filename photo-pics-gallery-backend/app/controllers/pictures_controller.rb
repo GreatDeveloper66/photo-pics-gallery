@@ -7,7 +7,7 @@ class PicturesController < ApplicationController
 
     def show
         picture = Picture.find(params[:id])
-        render json: picture, include: [:categories, :creator]
+        render json: picture, include: [:categories, :creator], methods: :num_of_likes
     end
 
     def destroy
@@ -16,7 +16,7 @@ class PicturesController < ApplicationController
 
     def index
       pictures = Picture.all
-      render json:pictures, methods: :num_of_likes
+      render json:pictures
     end
 
     private
