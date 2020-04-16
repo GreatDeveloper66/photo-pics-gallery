@@ -1,6 +1,5 @@
 class LikesController < ApplicationController
   def create
-    byebug
     like = Like.find_or_create_by(like_params)
     render json: like
   end

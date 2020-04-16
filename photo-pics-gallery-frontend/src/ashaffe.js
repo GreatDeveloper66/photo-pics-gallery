@@ -1,5 +1,6 @@
 var current_user = null;
 const usersURL = "http://localhost:3000/users";
+const likesURL = "http://localhost:3000/likes"
 const registerHeader = document.querySelectorAll('[data-tab="first"]')[0];
 const registerTab = document.querySelectorAll('[data-tab="first"]')[1];
 const loginButton =   `<button class="ui button" type="submit" id='login_button'>Submit</button>`;
@@ -148,9 +149,9 @@ function addLikeListeners() {
         },
         body:JSON.stringify({user_id: user_id,picture_id: picture_id})
       };
-      fetch(PICTURES_URL, configObj)
-        .then(response => response.json())
-        .then(data => console.log(data));
+       fetch(likesURL, configObj)
+         .then(response => response.json())
+         .then(data => console.log(data));
     }
   });
 }
