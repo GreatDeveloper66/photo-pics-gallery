@@ -89,6 +89,7 @@ function profileSubmit() {
           registerSubmit();
           document.querySelectorAll('[data-tab="fourth"]')[1].innerHTML = `<h1>Nobody Logged In</h1>`;
           registerHeader.innerHTML = `Register/Login`;
+          favorites.innerHTML = ``;
         });
     }
     else {
