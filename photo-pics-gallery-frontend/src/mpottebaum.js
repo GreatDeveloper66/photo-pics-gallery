@@ -145,6 +145,7 @@ class Category {
 
 class Picture {
     constructor(picture) {
+        this.id = picture.id
         this.url = picture.img_url
         this.creator = picture.creator
         this.categories = picture.categories
