@@ -98,6 +98,7 @@ class Category {
     renderShowAll = () => {
         this.fetchShowAll()
             .then(category => {
+                console.log(category)
                 this.allPictures = category.sorted_pictures
                 const header = document.createElement("h1")
                 header.innerText = this.name
@@ -116,8 +117,8 @@ class Category {
             pictures += `
             <div class="picture-card">
             <img class="category-picture" data-id=${picture.id} src="${picture.img_url}">
-            <p>Likes: </p>
-            <button class="like-button">Like Picture</button>
+            <p>Likes: ${picture.num_of_likes}</p>
+            <button class="ui button" data-type="like">Like Picture</button>
             </div>
             `
         })
@@ -146,6 +147,7 @@ class Picture {
     constructor(picture) {
         this.id = picture.id
         this.url = picture.img_url
+        this.numLikes = picture.num_of_likes
         this.creator = picture.creator
         this.categories = picture.categories
         this.container = document.querySelector("#show-picture")
@@ -160,8 +162,8 @@ class Picture {
         <div id="show-info">
             <div id="show-info-likes">
                 <h3>${this.creator.username}</h3>
-                <p>Likes </p>
-                <button class="like-button">Like Picture</button>
+                <p>Likes ${this.numLikes}</p>
+                <button class="ui button" data-type="like">Like Picture</button>
             </div>
             <div id="show-info-categories">
                 <h3>Categories</h3>
