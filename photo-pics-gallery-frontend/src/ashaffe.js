@@ -50,12 +50,13 @@ function registerSubmit(){
       },
       body: JSON.stringify({username: fullname})
     };
-    renderProfile();
     fetch(usersURL, configObj)
       .then(response => response.json())
       .then(data => {
         current_user = {id: data.id, username: data.username};
         renderFavorites(data);
+        renderProfile();
+        profileSubmit();
       })
       .catch(error => console.log(error));
       registerHeader.innerHTML = `LOGOUT`;
@@ -71,7 +72,7 @@ function registerSubmit(){
 
       });
 
-      profileSubmit();
+
 
     });
   }
@@ -154,16 +155,20 @@ function profileSubmit() {
 
 function renderProfile() {
   const profile = document.querySelectorAll('[data-tab="fourth"]')[1];
+  console.log(current_user);
+  const firstName = current_user ? current_user.username.split(' ')[0] : "First Name";
+  const lastName = current_user ? current_user.username.split(' ')[1] : "Last Name";
+
   const profile_form =
   `
   <form class="ui form" id="profile-form">
     <div class="field">
       <label>First Name</label>
-      <input type="text" name="firstname" placeholder="First Name">
+      <input type="text" name="firstname" placeholder=${firstName}>
     </div>
     <div class="field">
       <label>Last Name</label>
-      <input type="text" name="lastname" placeholder="Last Name">
+      <input type="text" name="lastname" placeholder=${lastName}>
     </div>
     <button class="ui button" type="submit" id="submit">Submit</button>
     <button class="negative ui button" id="delete_button">Delete</button>
@@ -172,6 +177,8 @@ function renderProfile() {
   profile.innerHTML = profile_form;
 
 }
+
+
 
 function addLikeListeners() {
   document.getElementById('pictures-view').addEventListener('click', function(event){
