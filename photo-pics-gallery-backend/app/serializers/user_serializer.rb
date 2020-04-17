@@ -12,7 +12,8 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def categories
-    self.object.created_pictures.map {|picture| picture.category_names}.flatten.uniq
+    all_category_names = self.object.created_pictures.map {|picture| picture.category_names}.flatten.uniq
+    all_category_names.sort {|c_1, c_2| c_1 <=> c_2}
   end
 
   def liked_pictures

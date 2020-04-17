@@ -9,7 +9,21 @@ class CategoryList {
         this.element = document.createElement("div")
         this.element.id = "categories"
         this.element.className = "ui middle aligned selection list"
+        this.createHeader()
         this.container = document.querySelector("#pictures-view")
+    }
+
+    createHeader = () => {
+        this.header = document.createElement("h1")
+        this.header.className = "ui header"
+        this.header.innerHTML = `
+        <i class="images icon"></i>
+        <div class="content">
+          Select A Category
+        </div>
+        `
+        this.header.style.borderBottom = "2px solid black"
+        this.header.style.paddingBottom = "5px"
     }
 
     createCategoryObjects = (categoriesJSON) => {
@@ -22,7 +36,7 @@ class CategoryList {
             this.element.append(category.element)
         })
         this.container.innerHTML = ""
-        this.container.append(this.element)
+        this.container.append(this.header, this.element)
     }
 
     addClickListener = () => {
