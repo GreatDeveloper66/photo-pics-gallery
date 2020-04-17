@@ -120,37 +120,21 @@ function profileSubmit() {
 
  function renderFavorites(data){
    favorites.innerHTML = ``;
-   const id = data.id;
-   fetch(`${usersURL}/${id}`)
-        .then(resp => resp.json())
-        .then(data => {
-          data.liked_pictures.forEach(pic => {
-            favorites.innerHTML +=
-            `
-              <div class="ui medium images content">
-                <img class="picture left floated" src="${pic.img_url}">
-              </div>
-            `
+   if(data){
+     const id = data.id;
+     fetch(`${usersURL}/${id}`)
+          .then(resp => resp.json())
+          .then(data => {
+            data.liked_pictures.forEach(pic => {
+              favorites.innerHTML +=
+              `
+                <div class="ui medium images content">
+                  <img class="picture left floated" src="${pic.img_url}">
+                </div>
+              `
+            });
           });
-
-        });
-//   if(current_user){
-//   const favorites = document.querySelectorAll('[data-tab="second"]')[1];
-//   fetch(`${usersURL}/${data.id}`)
-//     .then(resp => resp.json())
-//     .then(info => { console.log(info)
-//       // const liked_pics = info.like_pictures;
-//       // liked_pics.forEach(pic => {
-//       //   favorites.innerHTML +=
-//       //   `
-//       //   favorites.innerHTML += <div class="ui medium images content">
-//       //       <img class="picture left floated" src="${pic.img_url}">
-//       //   </div>
-//       //   `;
-//       })
-//
-//     });
-//   }
+   }
  }
 
 function renderProfile() {
@@ -178,6 +162,11 @@ function renderProfile() {
 
 }
 
+function addFavoritesListener(){
+  document.getElementById('user-favorites').addEventListener('click', function(){
+    renderFavorites(current_user);
+  })
+}
 
 
 function addLikeListeners() {
@@ -196,11 +185,10 @@ function addLikeListeners() {
        fetch(likesURL, configObj)
          .then(response => response.json())
          .then(like => {
-          //  renderFavorites(current_user);
           event.target.previousElementSibling.innerText = `Likes: ${like.total_likes}`
          });
     }
   });
 }
-
+addFavoritesListener()
 addLikeListeners();
