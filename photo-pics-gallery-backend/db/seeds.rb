@@ -27,6 +27,10 @@ tennis = Category.create(name: "Tennis")
 history = Category.create(name: "History")
 hockey =  Category.create(name: "Hockey")
 work = Category.create(name: "Work")
+building = Category.create(name: "Building")
+architecture = Category.create(name: "Architecture")
+nature = Category.create(name: "Nature")
+food = Category.create(name: "Food")
 
 
 # categories = [sports, games, leisure, events, soccer]
@@ -63,8 +67,21 @@ stickball = Picture.create(creator: created_users.sample, category_ids: [sports.
 work_desk = Picture.create(creator: created_users.sample, category_ids: [work.id], img_url: "https://www.dropbox.com/s/8h6hr3szy2vs1qk/aleks-dorohovich-nJdwUHmaY8A-unsplash.jpg?raw=1")
 works_desk = Picture.create(creator: created_users.sample, category_ids: [work.id], img_url: "https://www.dropbox.com/s/2f6nt13ivs5vkk8/michael-soledad-9vQIHXDIpl0-unsplash.jpg?raw=1")
 computer_desk = Picture.create(creator: created_users.sample, category_ids: [work.id], img_url: "https://www.dropbox.com/s/97ysmlmpz3xew33/thought-catalog-505eectW54k-unsplash.jpg?raw=1")
-
-
+architecture_1 = Picture.create(creator: created_users.sample, category_ids: [building.id,architecture.id], img_url: "https://www.dropbox.com/s/vzq9gxtu9o5b5zw/bantersnaps-vUwJ8uu_C1M-unsplash.jpg?raw=1")
+architecture_2 = Picture.create(creator: created_users.sample, category_ids: [building.id,architecture.id], img_url: "https://www.dropbox.com/s/s58n73fla46jh2s/danist-k2O4xHVUYjc-unsplash.jpg?raw=1")
+architecture_3 = Picture.create(creator: created_users.sample, category_ids: [building.id,architecture.id], img_url: "https://www.dropbox.com/s/vtoivwzut5lhwnp/pierre-chatel-innocenti-CYzftzemWxY-unsplash.jpg?raw=1")
+architecture_4 = Picture.create(creator: created_users.sample, category_ids: [building.id,architecture.id], img_url: "https://www.dropbox.com/s/wzx3sm8pa1w5jms/scott-webb-bFSdnd_Hj74-unsplash.jpg?raw=1")
+architecture_5 = Picture.create(creator: created_users.sample, category_ids: [building.id,architecture.id], img_url: "https://www.dropbox.com/s/hzv2n21upte9bwn/scott-webb-sBzVE77Bglc-unsplash.jpg?raw=1")
+food_1 = Picture.create(creator: created_users.sample, category_ids: [food.id,leisure.id], img_url: "https://www.dropbox.com/s/6uuh66cbmxxb9vk/esther-wilhelmsson-l2UalXYB-yM-unsplash.jpg?raw=1")
+food_2 = Picture.create(creator: created_users.sample, category_ids: [food.id,leisure.id], img_url: "https://www.dropbox.com/s/vpzi5r7y5rdzrsv/sara-cervera-C-FLXTT1Wts-unsplash.jpg?raw=1")
+food_3 = Picture.create(creator: created_users.sample, category_ids: [food.id,leisure.id], img_url: "https://www.dropbox.com/s/uy2dsjq0yr42mor/sara-cervera-QgAM6H5IK28-unsplash.jpg?raw=1")
+food_4 = Picture.create(creator: created_users.sample, category_ids: [food.id,leisure.id], img_url: "https://www.dropbox.com/s/ymivahyq2zr579i/sarah-gualtieri-qszW3z14hj0-unsplash.jpg?raw=1")
+food_5 = Picture.create(creator: created_users.sample, category_ids: [food.id,leisure.id], img_url: "https://www.dropbox.com/s/txsspaag2mpc8as/the-fry-family-food-co-hg-JXHPmdGY-unsplash.jpg?raw=1")
+nature_1 = Picture.create(creator: created_users.sample, category_ids: [nature.id,leisure.id], img_url: "https://www.dropbox.com/s/h9kzvwuboqgrpc8/henry-be-IicyiaPYGGI-unsplash.jpg?raw=1")
+nature_2 = Picture.create(creator: created_users.sample, category_ids: [nature.id,leisure.id], img_url: "https://www.dropbox.com/s/gsatz3fpetuiqzo/jeremy-bishop-EwKXn5CapA4-unsplash.jpg?raw=1")
+nature_3 = Picture.create(creator: created_users.sample, category_ids: [nature.id,leisure.id], img_url: "https://www.dropbox.com/s/m7bifjd1glmvv7w/lukasz-szmigiel-jFCViYFYcus-unsplash.jpg?raw=1")
+nature_4 = Picture.create(creator: created_users.sample, category_ids: [nature.id,leisure.id], img_url: "https://www.dropbox.com/s/doryenv7d0c3dqg/qingbao-meng-01_igFr7hd4-unsplash.jpg?raw=1")
+nature_5 = Picture.create(creator: created_users.sample, category_ids: [nature.id,leisure.id], img_url: "https://www.dropbox.com/s/v10ixvmd5cv51kv/shifaaz-shamoon-oR0uERTVyD0-unsplash.jpg?raw=1")
 
 
 
