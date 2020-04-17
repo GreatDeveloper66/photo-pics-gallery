@@ -2,11 +2,11 @@ class CategoriesController < ApplicationController
 
     def index
         categories = Category.all
-        render json: categories, methods: :recent_pictures
+        render json: categories
     end
 
     def show
         category = Category.find(params[:id])
-        render json: category, methods: :sorted_pictures
+        render json: category
     end
 end

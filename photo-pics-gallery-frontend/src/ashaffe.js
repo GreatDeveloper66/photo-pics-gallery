@@ -175,7 +175,7 @@ function renderProfile() {
 
 function addLikeListeners() {
   document.getElementById('pictures-view').addEventListener('click', function(event){
-    if(event.target.className === 'like-button'){
+    if(event.target.dataset.type === 'like'){
       const picture_id = event.target.previousElementSibling.previousElementSibling.dataset.id;
       const user_id = current_user.id;
       const configObj = {
@@ -188,8 +188,9 @@ function addLikeListeners() {
       };
        fetch(likesURL, configObj)
          .then(response => response.json())
-         .then(data => {
-           renderFavorites(current_user);
+         .then(like => {
+          //  renderFavorites(current_user);
+          event.target.previousElementSibling.innerText = `Likes: ${like.total_likes}`
          });
     }
   });

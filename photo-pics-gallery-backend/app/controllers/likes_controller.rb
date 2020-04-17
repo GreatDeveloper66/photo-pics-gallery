@@ -1,7 +1,7 @@
 class LikesController < ApplicationController
   def create
     like = Like.find_or_create_by(like_params)
-    render json: like
+    render json: like, include: :picture
   end
     def index
       likes = Like.all
