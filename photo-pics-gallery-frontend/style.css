@@ -1,3 +1,11 @@
+body {
+  background: url('https://www.dropbox.com/s/i05onm977cpb5g1/sean-o-KMn4VEeEPR8-unsplash.jpg?raw=1');
+  background-position: center;
+  background-size: cover;
+  background-repeat:no-repeat;
+}
+
+
 #pictures-container {
     display: grid;
     grid-template-columns: minmax(300px, 3fr) minmax(300px, 2fr);

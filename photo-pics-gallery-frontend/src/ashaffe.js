@@ -50,12 +50,13 @@ function registerSubmit(){
       },
       body: JSON.stringify({username: fullname})
     };
-    renderProfile();
     fetch(usersURL, configObj)
       .then(response => response.json())
       .then(data => {
         current_user = {id: data.id, username: data.username};
         renderFavorites(data);
+        renderProfile();
+        profileSubmit();
       })
       .catch(error => console.log(error));
       registerHeader.innerHTML = `LOGOUT`;
@@ -71,7 +72,7 @@ function registerSubmit(){
 
       });
 
-      profileSubmit();
+
 
     });
   }
@@ -119,51 +120,39 @@ function profileSubmit() {
 
  function renderFavorites(data){
    favorites.innerHTML = ``;
-   const id = data.id;
-   fetch(`${usersURL}/${id}`)
-        .then(resp => resp.json())
-        .then(data => {
-          data.liked_pictures.forEach(pic => {
-            favorites.innerHTML +=
-            `
-              <div class="ui medium images content">
-                <img class="picture left floated" src="${pic.img_url}">
-              </div>
-            `
+   if(data){
+     const id = data.id;
+     fetch(`${usersURL}/${id}`)
+          .then(resp => resp.json())
+          .then(data => {
+            data.liked_pictures.forEach(pic => {
+              favorites.innerHTML +=
+              `
+                <div class="ui medium images content">
+                  <img class="picture left floated" src="${pic.img_url}">
+                </div>
+              `
+            });
           });
-
-        });
-//   if(current_user){
-//   const favorites = document.querySelectorAll('[data-tab="second"]')[1];
-//   fetch(`${usersURL}/${data.id}`)
-//     .then(resp => resp.json())
-//     .then(info => { console.log(info)
-//       // const liked_pics = info.like_pictures;
-//       // liked_pics.forEach(pic => {
-//       //   favorites.innerHTML +=
-//       //   `
-//       //   favorites.innerHTML += <div class="ui medium images content">
-//       //       <img class="picture left floated" src="${pic.img_url}">
-//       //   </div>
-//       //   `;
-//       })
-//
-//     });
-//   }
+   }
  }
 
 function renderProfile() {
   const profile = document.querySelectorAll('[data-tab="fourth"]')[1];
+  console.log(current_user);
+  const firstName = current_user ? current_user.username.split(' ')[0] : "First Name";
+  const lastName = current_user ? current_user.username.split(' ')[1] : "Last Name";
+
   const profile_form =
   `
   <form class="ui form" id="profile-form">
     <div class="field">
       <label>First Name</label>
-      <input type="text" name="firstname" placeholder="First Name">
+      <input type="text" name="firstname" placeholder=${firstName}>
     </div>
     <div class="field">
       <label>Last Name</label>
-      <input type="text" name="lastname" placeholder="Last Name">
+      <input type="text" name="lastname" placeholder=${lastName}>
     </div>
     <button class="ui button" type="submit" id="submit">Submit</button>
     <button class="negative ui button" id="delete_button">Delete</button>
@@ -172,6 +161,13 @@ function renderProfile() {
   profile.innerHTML = profile_form;
 
 }
+
+function addFavoritesListener(){
+  document.getElementById('user-favorites').addEventListener('click', function(){
+    renderFavorites(current_user);
+  })
+}
+
 
 function addLikeListeners() {
   document.getElementById('pictures-view').addEventListener('click', function(event){
@@ -189,11 +185,10 @@ function addLikeListeners() {
        fetch(likesURL, configObj)
          .then(response => response.json())
          .then(like => {
-          //  renderFavorites(current_user);
           event.target.previousElementSibling.innerText = `Likes: ${like.total_likes}`
          });
     }
   });
 }
-
+addFavoritesListener()
 addLikeListeners();
