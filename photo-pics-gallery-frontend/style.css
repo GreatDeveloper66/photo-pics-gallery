@@ -45,3 +45,8 @@ body {
     display: grid;
     grid-template-columns: 150px auto;
 }
+
+.my-picture {
+    object-fit: contain;
+    height: 400px;
+}
