@@ -107,7 +107,7 @@ class UserPicture extends Picture {
 
     render = () => {
         this.card.innerHTML = `
-        <img style="position: absolute;" class="ui big image" src="${this.url}"></img>
+        <img style="position: absolute;" class="my-picture" src="${this.url}"></img>
         <button id="delete-picture" class="ui primary button" style="position: absolute;" data-id=${this.id}>Delete</button>
         `
     }
