@@ -26,6 +26,7 @@ football = Category.create(name: "Football")
 tennis = Category.create(name: "Tennis")
 history = Category.create(name: "History")
 hockey =  Category.create(name: "Hockey")
+work = Category.create(name: "Work")
 
 
 # categories = [sports, games, leisure, events, soccer]
@@ -42,6 +43,29 @@ lawn_tennis = Picture.create(creator: created_users.sample, category_ids: [sport
 wimbledon = Picture.create(creator: created_users.sample, category_ids: [sports.id, games.id, tennis.id, events.id], img_url: "https://upload.wikimedia.org/wikipedia/commons/2/22/Centre_Court.jpg")
 rink_hockey = Picture.create(creator: created_users.sample, category_ids: [sports.id, games.id, hockey.id], img_url: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Argentin_player_during_2007_rink_hockey_world_championship.jpg")
 box_hockey = Picture.create(creator: created_users.sample, category_ids: [sports.id, games.id, hockey.id, history.id], img_url: "https://upload.wikimedia.org/wikipedia/commons/1/18/Boxhockey1935.jpg")
+workers_desk = Picture.create(creator: created_users.sample, category_ids: [work.id], img_url: "https://www.dropbox.com/s/1u1kmq4q1r6ropu/1%2AzB8InrY8_Eh1WSyTJYAh9g.jpeg?raw=1")
+concert_lights = Picture.create(creator: created_users.sample, category_ids: [leisure.id,events.id], img_url: "https://www.dropbox.com/s/6w61kkmstlylwdj/alexander-popov-hTv8aaPziOQ-unsplash.jpg?raw=1")
+archer = Picture.create(creator: created_users.sample, category_ids: [leisure.id,sports.id], img_url: "https://www.dropbox.com/s/9zvey89zlk69ghw/annie-spratt-jY9mXvA15W0-unsplash.jpg?raw=1")
+concert_people = Picture.create(creator: created_users.sample, category_ids: [leisure.id,events.id], img_url: "https://www.dropbox.com/s/1rsdh9e1xva85ke/anthony-delanoix-hzgs56Ze49s-unsplash.jpg?raw=1")
+concert_performer = Picture.create(creator: created_users.sample, category_ids: [leisure.id,events.id], img_url: "https://www.dropbox.com/s/hdetvvyz3qczm92/austin-neill-hgO1wFPXl3I-unsplash.jpg?raw=1")
+boys_playing = Picture.create(creator: created_users.sample, category_ids: [leisure.id,history.id], img_url: "https://www.dropbox.com/s/r2kv7j6wvrus6yj/Boys_with_hoops_on_Chesnut_Street.jpg?raw=1")
+runner = Picture.create(creator: created_users.sample, category_ids: [leisure.id,sports.id], img_url: "https://www.dropbox.com/s/r11qtky2tmdo02g/braden-collum-9HI8UJMSdZA-unsplash.jpg?raw=1")
+working_desk = Picture.create(creator: created_users.sample, category_ids: [work.id], img_url: "https://www.dropbox.com/s/km6ft0c16znrwz3/campaign-creators-e6n7uoEnYbA-unsplash.jpg?raw=1")
+sphinx = Picture.create(creator: created_users.sample, category_ids: [history.id], img_url: "https://www.dropbox.com/s/z9v1oyytlm6dx88/daniel-h-tong-xBeid9r1paU-unsplash.jpg?raw=1")
+rome = Picture.create(creator: created_users.sample, category_ids: [history.id], img_url: "https://www.dropbox.com/s/98rfx1nu2lh5a7n/dario-veronesi-lUO-BjCiZEA-unsplash.jpg?raw=1")
+lunch = Picture.create(creator: created_users.sample, category_ids: [leisure.id], img_url: "https://www.dropbox.com/s/gvbskfxgpzrt0dw/henrique-felix-mmuMa7VXL1Y-unsplash.jpg?raw=1")
+boxing = Picture.create(creator: created_users.sample, category_ids: [sports.id, leisure.id], img_url: "https://www.dropbox.com/s/e4fwpyexovz03y6/hermes-rivera-qbf59TU077Q-unsplash.jpg?raw=1")
+sailing = Picture.create(creator: created_users.sample, category_ids: [sports.id, leisure.id], img_url: "https://www.dropbox.com/s/h09n1xcqbej8g61/jeff-isaak-p7nrRdMDebM-unsplash.jpg?raw=1")
+concert_lights = Picture.create(creator: created_users.sample, category_ids: [sports.id, leisure.id], img_url: "https://www.dropbox.com/s/6ebr2dipvicpa6f/yvette-de-wit-NYrVisodQ2M-unsplash.jpg?raw=1")
+biking = Picture.create(creator: created_users.sample, category_ids: [leisure.id], img_url: "https://www.dropbox.com/s/480nq7exbv4m3uj/travis-yewell-z0bW16-Cg8g-unsplash.jpg?raw=1")
+diamond = Picture.create(creator: created_users.sample, category_ids: [sports.id, games.id,leisure.id], img_url: "https://www.dropbox.com/s/av9917f9lchg2qn/tim-gouw-VvQSzMJ_h0U-unsplash.jpg?raw=1")
+stickball = Picture.create(creator: created_users.sample, category_ids: [sports.id, history.id,leisure.id], img_url: "https://www.dropbox.com/s/hfed8vzulhl05qv/stickball.jpg?raw=1")
+work_desk = Picture.create(creator: created_users.sample, category_ids: [work.id], img_url: "https://www.dropbox.com/s/8h6hr3szy2vs1qk/aleks-dorohovich-nJdwUHmaY8A-unsplash.jpg?raw=1")
+works_desk = Picture.create(creator: created_users.sample, category_ids: [work.id], img_url: "https://www.dropbox.com/s/2f6nt13ivs5vkk8/michael-soledad-9vQIHXDIpl0-unsplash.jpg?raw=1")
+computer_desk = Picture.create(creator: created_users.sample, category_ids: [work.id], img_url: "https://www.dropbox.com/s/97ysmlmpz3xew33/thought-catalog-505eectW54k-unsplash.jpg?raw=1")
+
+
+
 
 
 created_users.each do |user|
